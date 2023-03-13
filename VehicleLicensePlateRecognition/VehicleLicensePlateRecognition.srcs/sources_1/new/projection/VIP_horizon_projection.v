@@ -1,12 +1,10 @@
 `timescale 1ns/1ns
-module VIP_horizon_projection
-#(
+module VIP_horizon_projection#(
 	parameter	[9:0]	IMG_HDISP = 10'd640,	//640*480
 	parameter	[9:0]	IMG_VDISP = 10'd480,
 	
 	parameter   [9:0]   EDGE_THROD = 10'd100
-)
-(
+)(
 	//global clock
 	input				clk,  				//cmos video pixel clock
 	input				rst_n,				//global reset
@@ -48,26 +46,6 @@ assign	post_frame_href 	= 	per_frame_href_r2;
 assign	post_frame_clken 	= 	per_frame_clken_r2;
 assign  post_img_Bit     	=   per_img_Bit_r2;
 
-//------------------------------------------
-//lag 1 clocks signal sync  
-
-always@(posedge clk or negedge rst_n)
-begin
-	if(!rst_n)
-		begin
-		per_frame_vsync_r2 	<= 0;
-		per_frame_href_r2 	<= 0;
-		per_frame_clken_r2 	<= 0;
-		per_img_Bit_r2		<= 0;
-		end
-	else
-		begin
-		per_frame_vsync_r2 	<= 	per_frame_vsync_r 	;
-		per_frame_href_r2	<= 	per_frame_href_r 	;
-		per_frame_clken_r2 	<= 	per_frame_clken_r 	;
-		per_img_Bit_r2		<= 	per_img_Bit_r		;
-		end
-end
 
 //------------------------------------------
 //lag 1 clocks signal sync  
@@ -90,6 +68,28 @@ begin
 		end
 end
 
+//------------------------------------------
+//lag 1 clocks signal sync  
+
+always@(posedge clk or negedge rst_n)
+begin
+	if(!rst_n)
+		begin
+		per_frame_vsync_r2 	<= 0;
+		per_frame_href_r2 	<= 0;
+		per_frame_clken_r2 	<= 0;
+		per_img_Bit_r2		<= 0;
+		end
+	else
+		begin
+		per_frame_vsync_r2 	<= 	per_frame_vsync_r 	;
+		per_frame_href_r2	<= 	per_frame_href_r 	;
+		per_frame_clken_r2 	<= 	per_frame_clken_r 	;
+		per_img_Bit_r2		<= 	per_img_Bit_r		;
+		end
+end
+
+
 wire vsync_pos_flag;
 wire vsync_neg_flag;
 
@@ -103,17 +103,16 @@ reg [9:0]   y_cnt;
 
 always@(posedge clk or negedge rst_n)
 begin
-	if(!rst_n)
-		begin
-			x_cnt <= 10'd0;
-			y_cnt <= 10'd0;
-		end
-	else
+	if(!rst_n)begin
+        x_cnt <= 10'd0;
+        y_cnt <= 10'd0;
+    end
+	else begin
 		if(vsync_pos_flag)begin
 			x_cnt <= 10'd0;
 			y_cnt <= 10'd0;
 		end
-		else if(per_frame_clken) begin
+		else if(per_frame_clken)begin
 			if(x_cnt < IMG_HDISP - 1) begin
 				x_cnt <= x_cnt + 1'b1;
 				y_cnt <= y_cnt;
@@ -123,6 +122,7 @@ begin
 				y_cnt <= y_cnt + 1'b1;
 			end
 		end
+    end
 end
 
 //------------------------------------------
@@ -132,15 +132,14 @@ reg [9:0]   y_cnt_r;
 
 always@(posedge clk or negedge rst_n)
 begin
-	if(!rst_n)
-		begin
-			x_cnt_r <= 10'd0;
-			y_cnt_r <= 10'd0;
-		end
+	if(!rst_n) begin
+        x_cnt_r <= 10'd0;
+        y_cnt_r <= 10'd0;
+    end
 	else begin
-			x_cnt_r <= x_cnt;
-            y_cnt_r <= y_cnt;
-		end
+        x_cnt_r <= x_cnt;
+        y_cnt_r <= y_cnt;
+    end
 end
 
 //------------------------------------------
@@ -177,17 +176,29 @@ wire [9:0] ram_rd_addr;
 //在图像人的第一行和最后一行，需要遍历RAM中的数据
 assign ram_rd_addr = ((y_cnt == 10'd0) || (y_cnt == IMG_VDISP - 1'b1))  ?  x_cnt : y_cnt;
 
-ram	u_projection_ram (
-	.wrclock 	( clk ),
-	.wren 		( ram_wr ),
-	.wraddress 	( ram_wr_addr ),
-	.data 		( ram_wr_data ),
+// ram	u_projection_ram (
+// 	.wrclock 	( clk 			),
+// 	.wren 		( ram_wr 		),
+// 	.wraddress 	( ram_wr_addr 	),
+// 	.data 		( ram_wr_data 	),
 	
-	.rdclock 	( clk ),
-	.rdaddress 	( ram_rd_addr ),
-	.q 			( ram_rd_data )
-	);
-	
+// 	.rdclock 	( clk 			),
+// 	.rdaddress 	( ram_rd_addr 	),
+// 	.q 			( ram_rd_data 	)
+// 	);
+
+ram u_projection_ram (
+  .clka		(clk 			),  // input wire clka
+  .wea		(ram_wr 		),  // input wire [0 : 0] wea
+  .addra	(ram_wr_addr 	),  // input wire [9 : 0] addra
+  .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
+
+  .clkb		(clk 			),  // input wire clkb
+  .addrb	(ram_rd_addr 	),  // input wire [9 : 0] addrb
+  .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+);
+
+
 reg [9:0] rd_data_d1;
 reg [9:0] rd_data_d2;
 

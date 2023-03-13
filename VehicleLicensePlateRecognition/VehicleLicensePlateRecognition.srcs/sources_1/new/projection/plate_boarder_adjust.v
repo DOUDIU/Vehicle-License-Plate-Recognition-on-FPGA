@@ -2,15 +2,15 @@
 
 module plate_boarder_adjust (
 	//global clock
-	input				clk,  				
-	input				rst_n,				
+	input				clk					,  				
+	input				rst_n				,				
 
 	input				per_frame_vsync,	
 
-    input      [9:0] 	max_line_up 	,		//输入的车牌候选区域
-    input      [9:0] 	max_line_down	,
-    input      [9:0] 	max_line_left 	,     
-    input      [9:0] 	max_line_right	,
+    input      [9:0] 	max_line_up 		,	//输入的车牌候选区域
+    input      [9:0] 	max_line_down		,
+    input      [9:0] 	max_line_left 		,     
+    input      [9:0] 	max_line_right		,
 	
     output reg [9:0] 	plate_boarder_up 	,  	//调整后的边框
     output reg [9:0] 	plate_boarder_down	, 

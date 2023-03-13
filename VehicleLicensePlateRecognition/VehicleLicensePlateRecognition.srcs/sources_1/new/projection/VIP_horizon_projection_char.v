@@ -1,12 +1,10 @@
 `timescale 1ns/1ns
-module VIP_horizon_projection_char
-#(
+module VIP_horizon_projection_char#(
 	parameter	[9:0]	IMG_HDISP = 10'd640,	//640*480
 	parameter	[9:0]	IMG_VDISP = 10'd480,
 	
 	parameter   [9:0]   EDGE_THROD = 10'd14
-)
-(
+)(
 	//global clock
 	input				clk,  				//cmos video pixel clock
 	input				rst_n,				//global reset
@@ -23,7 +21,7 @@ module VIP_horizon_projection_char
 	output				post_frame_clken,	//Processed Image data output/capture enable clock
 	output				post_img_Bit, 		//Processed Image Bit flag outout(1: Value, 0:inValid)
 
-    output reg [9:0] 	char_top ,        //边沿坐标
+    output reg [9:0] 	char_top ,          //边沿坐标
     output reg [9:0] 	char_down,
 	
     input      [9:0] 	horizon_start,		//投影起始列
@@ -55,6 +53,27 @@ always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n)
 		begin
+		per_frame_vsync_r 	<= 0;
+		per_frame_href_r 	<= 0;
+		per_frame_clken_r 	<= 0;
+		per_img_Bit_r		<= 0;
+		end
+	else
+		begin
+		per_frame_vsync_r 	<= 	per_frame_vsync	;
+		per_frame_href_r	<= 	per_frame_href	;
+		per_frame_clken_r 	<= 	per_frame_clken	;
+		per_img_Bit_r	    <= 	per_img_Bit		;
+		end
+end
+
+//------------------------------------------
+//lag 1 clocks signal sync  
+
+always@(posedge clk or negedge rst_n)
+begin
+	if(!rst_n)
+		begin
 		per_frame_vsync_r2 	<= 0;
 		per_frame_href_r2 	<= 0;
 		per_frame_clken_r2 	<= 0;
@@ -69,26 +88,6 @@ begin
 		end
 end
 
-//------------------------------------------
-//lag 1 clocks signal sync  
-
-always@(posedge clk or negedge rst_n)
-begin
-	if(!rst_n)
-		begin
-		per_frame_vsync_r 	<= 0;
-		per_frame_href_r 	<= 0;
-		per_frame_clken_r 	<= 0;
-		per_img_Bit_r		<= 0;
-		end
-	else
-		begin
-		per_frame_vsync_r 	<= 	per_frame_vsync	;
-		per_frame_href_r	<= 	per_frame_href	;
-		per_frame_clken_r 	<= 	per_frame_clken	;
-		per_img_Bit_r	    <= 	per_img_Bit		;
-		end
-end
 
 wire vsync_pos_flag;
 wire vsync_neg_flag;
@@ -171,8 +170,8 @@ always@(posedge clk or negedge rst_n) begin
 		change_cnt 		<= 0;
 	end
 	else if(post_frame_href == 1'b0) begin	//一行开始初始化
-		img_bit_reg	<= 0;
-		change_cnt  <= 0;	
+		img_bit_reg		<= 0;
+		change_cnt  	<= 0;	
 	end
 	else if(per_frame_clken) begin
 		

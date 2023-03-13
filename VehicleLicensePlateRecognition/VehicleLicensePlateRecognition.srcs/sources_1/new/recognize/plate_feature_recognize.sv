@@ -22,7 +22,7 @@ module plate_feature_recognize
 
 	input       [20:0] 	char_boarder[7:0],			//车牌中字符的位置
     input     	[9:0]  	char_top	,  	
-    input     	[9:0]  	char_down ,
+    input     	[9:0]  	char_down 	,
 
 	output reg  [0:4] 	char_feature  [7:0] [7:0] //各字符的特征值，以二维数组的形式存在
 );
@@ -35,8 +35,7 @@ reg			per_frame_href_r;
 reg			per_frame_clken_r;
 reg  		per_img_Bit_r;
 
-always@(posedge clk or negedge rst_n)
-begin
+always@(posedge clk or negedge rst_n)begin
 	if(!rst_n)
 		begin
 		per_frame_vsync_r 	<= 0;
@@ -64,8 +63,7 @@ assign vsync_neg_flag = (~per_frame_vsync) & per_frame_vsync_r;
 reg [9:0]  	x_cnt;
 reg [9:0]   y_cnt;
 
-always@(posedge clk or negedge rst_n)
-begin
+always@(posedge clk or negedge rst_n)begin
 	if(!rst_n)
 		begin
 			x_cnt <= 10'd0;
@@ -93,8 +91,7 @@ end
 reg [9:0]  	x_cnt_r;
 reg [9:0]   y_cnt_r;
 
-always@(posedge clk or negedge rst_n)
-begin
+always@(posedge clk or negedge rst_n)begin
 	if(!rst_n)
 		begin
 			x_cnt_r <= 10'd0;

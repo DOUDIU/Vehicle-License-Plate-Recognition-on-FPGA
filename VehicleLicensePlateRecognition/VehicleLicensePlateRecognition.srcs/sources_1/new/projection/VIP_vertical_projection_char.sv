@@ -170,17 +170,16 @@ assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//第一行，初始化RAM�
                         ((y_cnt > vertical_start) && (y_cnt < vertical_end)) ? (ram_rd_data + per_img_Bit_r) :  
                             ram_rd_data;
 
-ram	u_projection_ram (
-	.wrclock 	( clk ),
-	.wren 		( ram_wr ),
-	.wraddress 	( x_cnt_r ),
-	.data 		( ram_wr_data ),
-	
-	.rdclock 	( clk ),
-	.rdaddress 	( x_cnt ),
-	.q 			( ram_rd_data )
-	);
+ram u_projection_ram (
+  .clka		(clk 			),  // input wire clka
+  .wea		(ram_wr 		),  // input wire [0 : 0] wea
+  .addra	(x_cnt_r 		),  // input wire [9 : 0] addra
+  .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
 
+  .clkb		(clk 			),  // input wire clkb
+  .addrb	(x_cnt 			),  // input wire [9 : 0] addrb
+  .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+);
 	
 reg [9:0] rd_data_d1;
 reg [9:0] rd_data_d2;

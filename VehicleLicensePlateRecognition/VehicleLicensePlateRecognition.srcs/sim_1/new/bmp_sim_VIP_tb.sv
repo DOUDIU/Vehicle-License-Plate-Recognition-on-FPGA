@@ -1,37 +1,37 @@
 `timescale 1ns / 1ns
 
-//ä½¿ç”¨BMPå›¾ç‰‡æ ¼å¼ä»¿çœŸVIPè§†é¢‘å›¾åƒå¤„ç†ç®—æ³•
+//Ê¹ÓÃBMPÍ¼Æ¬¸ñÊ½·ÂÕæVIPÊÓÆµÍ¼Ïñ´¦ÀíËã·¨
 module bmp_sim_VIP_tb();
  
-integer iBmpFileId;                 //è¾“å…¥BMPå›¾ç‰‡
+integer iBmpFileId;                 //ÊäÈëBMPÍ¼Æ¬
 
-integer oBmpFileId_1;                 //è¾“å‡ºBMPå›¾ç‰‡ 1
-integer oBmpFileId_2;                 //è¾“å‡ºBMPå›¾ç‰‡ 2
-integer oBmpFileId_3;                 //è¾“å‡ºBMPå›¾ç‰‡ 3
-integer oBmpFileId_4;                 //è¾“å‡ºBMPå›¾ç‰‡ 3
+integer oBmpFileId_1;                 //Êä³öBMPÍ¼Æ¬ 1
+integer oBmpFileId_2;                 //Êä³öBMPÍ¼Æ¬ 2
+integer oBmpFileId_3;                 //Êä³öBMPÍ¼Æ¬ 3
+integer oBmpFileId_4;                 //Êä³öBMPÍ¼Æ¬ 3
 
-integer oTxtFileId;                 //è¾“å…¥TXTæ–‡æœ¬
+integer oTxtFileId;                 //ÊäÈëTXTÎÄ±¾
         
-integer iIndex = 0;                 //è¾“å‡ºBMPæ•°æ®ç´¢å¼•
-integer pixel_index = 0;            //è¾“å‡ºåƒç´ æ•°æ®ç´¢å¼• 
+integer iIndex = 0;                 //Êä³öBMPÊı¾İË÷Òı
+integer pixel_index = 0;            //Êä³öÏñËØÊı¾İË÷Òı 
         
 integer iCode;      
         
-integer iBmpWidth;                  //è¾“å…¥BMP å®½åº¦
-integer iBmpHight;                  //è¾“å…¥BMP é«˜åº¦
-integer iBmpSize;                   //è¾“å…¥BMP å­—èŠ‚æ•°
-integer iDataStartIndex;            //è¾“å…¥BMP åƒç´ æ•°æ®åç§»é‡
+integer iBmpWidth;                  //ÊäÈëBMP ¿í¶È
+integer iBmpHight;                  //ÊäÈëBMP ¸ß¶È
+integer iBmpSize;                   //ÊäÈëBMP ×Ö½ÚÊı
+integer iDataStartIndex;            //ÊäÈëBMP ÏñËØÊı¾İÆ«ÒÆÁ¿
     
-reg [ 7:0] rBmpData [0:2000000];    //ç”¨äºå¯„å­˜è¾“å…¥BMPå›¾ç‰‡ä¸­çš„å­—èŠ‚æ•°æ®ï¼ˆåŒ…æ‹¬54å­—èŠ‚çš„æ–‡ä»¶å¤´ï¼‰
+reg [ 7:0] rBmpData [0:2000000];    //ÓÃÓÚ¼Ä´æÊäÈëBMPÍ¼Æ¬ÖĞµÄ×Ö½ÚÊı¾İ£¨°üÀ¨54×Ö½ÚµÄÎÄ¼şÍ·£©
 
-reg [ 7:0] Vip_BmpData_1 [0:2000000]; //ç”¨äºå¯„å­˜è§†é¢‘å›¾åƒå¤„ç†ä¹‹å çš„BMPå›¾ç‰‡ æ•°æ®  
-reg [ 7:0] Vip_BmpData_2 [0:2000000]; //ç”¨äºå¯„å­˜è§†é¢‘å›¾åƒå¤„ç†ä¹‹å çš„BMPå›¾ç‰‡ æ•°æ® 
-reg [ 7:0] Vip_BmpData_3 [0:2000000]; //ç”¨äºå¯„å­˜è§†é¢‘å›¾åƒå¤„ç†ä¹‹å çš„BMPå›¾ç‰‡ æ•°æ® 
-reg [ 7:0] Vip_BmpData_4 [0:2000000]; //ç”¨äºå¯„å­˜è§†é¢‘å›¾åƒå¤„ç†ä¹‹å çš„BMPå›¾ç‰‡ æ•°æ® 
+reg [ 7:0] Vip_BmpData_1 [0:2000000]; //ÓÃÓÚ¼Ä´æÊÓÆµÍ¼Ïñ´¦ÀíÖ®ºó µÄBMPÍ¼Æ¬ Êı¾İ  
+reg [ 7:0] Vip_BmpData_2 [0:2000000]; //ÓÃÓÚ¼Ä´æÊÓÆµÍ¼Ïñ´¦ÀíÖ®ºó µÄBMPÍ¼Æ¬ Êı¾İ 
+reg [ 7:0] Vip_BmpData_3 [0:2000000]; //ÓÃÓÚ¼Ä´æÊÓÆµÍ¼Ïñ´¦ÀíÖ®ºó µÄBMPÍ¼Æ¬ Êı¾İ 
+reg [ 7:0] Vip_BmpData_4 [0:2000000]; //ÓÃÓÚ¼Ä´æÊÓÆµÍ¼Ïñ´¦ÀíÖ®ºó µÄBMPÍ¼Æ¬ Êı¾İ 
 
-reg [31:0] rBmpWord;                //è¾“å‡ºBMPå›¾ç‰‡æ—¶ç”¨äºå¯„å­˜æ•°æ®ï¼ˆä»¥wordä¸ºå•ä½ï¼Œå³4byteï¼‰
+reg [31:0] rBmpWord;                //Êä³öBMPÍ¼Æ¬Ê±ÓÃÓÚ¼Ä´æÊı¾İ£¨ÒÔwordÎªµ¥Î»£¬¼´4byte£©
 
-reg [ 7:0] pixel_data;              //è¾“å‡ºè§†é¢‘æµæ—¶çš„åƒç´ æ•°æ®
+reg [ 7:0] pixel_data;              //Êä³öÊÓÆµÁ÷Ê±µÄÏñËØÊı¾İ
 
 reg clk;
 reg rst_n;
@@ -44,147 +44,112 @@ reg [ 7:0] vip_pixel_data   [0:921600];     //640x480x3
 
 integer i;
 integer j;
-wire [0:4] 	char_feature  [7:0] [7:0] ;		//ç‰¹å¾ç»“æœ
+wire [0:4] 	char_feature  [7:0] [7:0] ;		//ÌØÕ÷½á¹û
 
 //---------------------------------------------
 initial begin
+	iBmpFileId      = $fopen("../../../../../PIC/21_Su_A65NF7/21_Su_A65NF7.bmp","rb");
 
-    //æ‰“å¼€è¾“å…¥BMPå›¾ç‰‡
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\1_Jing_J66819.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\2_E_R55C98.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\3_Wan_AM8B58.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\4_Hu_C8U2Z2.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\5_Su_H3039K.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\6_Meng_FAW871.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\7_Xiang_D85F50.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\8_Zhe_C57GA8.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\9_Lu_R535FU.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\10_Yu_GE6V08.bmp","rb");
-	
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\11_Yu_EVY222.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\12_Su_0X0L0.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\13_Su_AQQ806.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\14_Su_A3X3S6.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\15_Su_A6Z36P.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\16_Lu_R3I8T.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\17_Su_A234TW.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\18_Su_A9Q065.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\19_Hu_A4J599.bmp","rb");
-	// iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\20_Yu_PB3X80.bmp","rb");
-	 iBmpFileId      = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\21_Su_A65NF7.bmp","rb");
-
-    //å°†è¾“å…¥BMPå›¾ç‰‡åŠ è½½åˆ°æ•°ç»„ä¸­ 21_Su_A65NF7
+    //½«ÊäÈëBMPÍ¼Æ¬¼ÓÔØµ½Êı×éÖĞ 21_Su_A65NF7
 	iCode = $fread(rBmpData,iBmpFileId);
  
-    //æ ¹æ®BMPå›¾ç‰‡æ–‡ä»¶å¤´çš„æ ¼å¼ï¼Œåˆ†åˆ«è®¡ç®—å‡ºå›¾ç‰‡çš„ å®½åº¦ /é«˜åº¦ /åƒç´ æ•°æ®åç§»é‡ /å›¾ç‰‡å­—èŠ‚æ•°
+    //¸ù¾İBMPÍ¼Æ¬ÎÄ¼şÍ·µÄ¸ñÊ½£¬·Ö±ğ¼ÆËã³öÍ¼Æ¬µÄ ¿í¶È /¸ß¶È /ÏñËØÊı¾İÆ«ÒÆÁ¿ /Í¼Æ¬×Ö½ÚÊı
 	iBmpWidth       = {rBmpData[21],rBmpData[20],rBmpData[19],rBmpData[18]};
 	iBmpHight       = {rBmpData[25],rBmpData[24],rBmpData[23],rBmpData[22]};
 	iBmpSize        = {rBmpData[ 5],rBmpData[ 4],rBmpData[ 3],rBmpData[ 2]};
 	iDataStartIndex = {rBmpData[13],rBmpData[12],rBmpData[11],rBmpData[10]};
     
-    //å…³é—­è¾“å…¥BMPå›¾ç‰‡
+    //¹Ø±ÕÊäÈëBMPÍ¼Æ¬
 	$fclose(iBmpFileId);
-
-
-//---------------------------------------------		
-	//æ‰“å¼€è¾“å‡ºBMPå›¾ç‰‡
-	oBmpFileId_1 = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\output_file_1.bmp","wb+");
-	oBmpFileId_2 = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\output_file_2.bmp","wb+");
-	oBmpFileId_3 = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\output_file_4.bmp","wb+");
-	oBmpFileId_4 = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\output_file_3.bmp","wb+");
         
-    //å»¶è¿Ÿ13msï¼Œç­‰å¾…ç¬¬ä¸€å¸§VIPå¤„ç†ç»“æŸ
+    //ÑÓ³Ù13ms£¬µÈ´ıµÚÒ»Ö¡VIP´¦Àí½áÊø
     #13000000    
 	
-    //åŠ è½½å›¾åƒå¤„ç†åï¼ŒBMPå›¾ç‰‡çš„æ–‡ä»¶å¤´å’Œåƒç´ æ•°æ®
+    //¼ÓÔØÍ¼Ïñ´¦Àíºó£¬BMPÍ¼Æ¬µÄÎÄ¼şÍ·ºÍÏñËØÊı¾İ
 	
 //---------------------------------------------		
-	//è¾“å‡ºç¬¬ä¸€å¼ 
+	oBmpFileId_1 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_1.bmp","wb+");
+	//Êä³öµÚÒ»ÕÅ
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_1[iIndex] = rBmpData[iIndex];
         else
             Vip_BmpData_1[iIndex] = vip_pixel_data_1[iIndex-54];
 	end
-    //å°†æ•°ç»„ä¸­çš„æ•°æ®å†™åˆ°è¾“å‡ºBMPå›¾ç‰‡ä¸­    
-	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
-		rBmpWord = {Vip_BmpData_1[iIndex+3],Vip_BmpData_1[iIndex+2],Vip_BmpData_1[iIndex+1],Vip_BmpData_1[iIndex]};
-		$fwrite(oBmpFileId_1,"%u",rBmpWord);
+    //½«Êı×éÖĞµÄÊı¾İĞ´µ½Êä³öBMPÍ¼Æ¬ÖĞ    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		rBmpWord = Vip_BmpData_1[iIndex];
+		$fwrite(oBmpFileId_1,"%c",rBmpWord);
 	end
+	$fclose(oBmpFileId_1);
 
 //---------------------------------------------		
-	//è¾“å‡ºç¬¬äºŒå¼ 
+	//Êä³öµÚ¶şÕÅ
+	oBmpFileId_2 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_2.bmp","wb+");
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_2[iIndex] = rBmpData[iIndex];
         else
             Vip_BmpData_2[iIndex] = vip_pixel_data_2[iIndex-54];
 	end
-    //å°†æ•°ç»„ä¸­çš„æ•°æ®å†™åˆ°è¾“å‡ºBMPå›¾ç‰‡ä¸­    
-	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
-		rBmpWord = {Vip_BmpData_2[iIndex+3],Vip_BmpData_2[iIndex+2],Vip_BmpData_2[iIndex+1],Vip_BmpData_2[iIndex]};
-		$fwrite(oBmpFileId_2,"%u",rBmpWord);
+    //½«Êı×éÖĞµÄÊı¾İĞ´µ½Êä³öBMPÍ¼Æ¬ÖĞ  
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		rBmpWord = Vip_BmpData_2[iIndex];
+		$fwrite(oBmpFileId_2,"%c",rBmpWord);
 	end
-	
+	$fclose(oBmpFileId_2);
+
 //---------------------------------------------
-//å»¶è¿Ÿ13msï¼Œç­‰å¾…ç¬¬äºŒå¸§VIPå¤„ç†ç»“æŸ
+//ÑÓ³Ù13ms£¬µÈ´ıµÚ¶şÖ¡VIP´¦Àí½áÊø
     #13000000 	
-	
-//---------------------------------------------		
-	//è¾“å‡ºç¬¬ä¸‰å¼ 
+
+//---------------------------------------------	
+	//Êä³öµÚÈıÕÅ
+	oBmpFileId_3 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_3.bmp","wb+");
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_3[iIndex] = rBmpData[iIndex];
         else
             Vip_BmpData_3[iIndex] = vip_pixel_data_3[iIndex-54];
 	end
-    //å°†æ•°ç»„ä¸­çš„æ•°æ®å†™åˆ°è¾“å‡ºBMPå›¾ç‰‡ä¸­    
-	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
-		rBmpWord = {Vip_BmpData_3[iIndex+3],Vip_BmpData_3[iIndex+2],Vip_BmpData_3[iIndex+1],Vip_BmpData_3[iIndex]};
-		$fwrite(oBmpFileId_3,"%u",rBmpWord);
+    //½«Êı×éÖĞµÄÊı¾İĞ´µ½Êä³öBMPÍ¼Æ¬ÖĞ    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		rBmpWord = Vip_BmpData_3[iIndex];
+		$fwrite(oBmpFileId_3,"%c",rBmpWord);
 	end
-
-//---------------------------------------------
-//å»¶è¿Ÿ13msï¼Œç­‰å¾…ç¬¬ä¸‰å¸§VIPå¤„ç†ç»“æŸ
-    #17000000 	
+	$fclose(oBmpFileId_3);
 	
+//---------------------------------------------
+//ÑÓ³Ù13ms£¬µÈ´ıµÚÈıÖ¡VIP´¦Àí½áÊø
+    #17000000 	
 //---------------------------------------------		
-	//è¾“å‡ºç¬¬å››å¼ 
+	//Êä³öµÚËÄÕÅ
+	oBmpFileId_4 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_4.bmp","wb+");
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_4[iIndex] = rBmpData[iIndex];
         else
             Vip_BmpData_4[iIndex] = vip_pixel_data[iIndex-54];
 	end
-    //å°†æ•°ç»„ä¸­çš„æ•°æ®å†™åˆ°è¾“å‡ºBMPå›¾ç‰‡ä¸­    
-	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
-		rBmpWord = {Vip_BmpData_4[iIndex+3],Vip_BmpData_4[iIndex+2],Vip_BmpData_4[iIndex+1],Vip_BmpData_4[iIndex]};
-		$fwrite(oBmpFileId_4,"%u",rBmpWord);
-	end	
-    	
-    //å…³é—­è¾“å‡ºBMPå›¾ç‰‡
-	$fclose(oBmpFileId_1);
-	$fclose(oBmpFileId_2);
-	$fclose(oBmpFileId_3);
+    //½«Êı×éÖĞµÄÊı¾İĞ´µ½Êä³öBMPÍ¼Æ¬ÖĞ    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		rBmpWord = Vip_BmpData_4[iIndex];
+		$fwrite(oBmpFileId_4,"%c",rBmpWord);
+	end
 	$fclose(oBmpFileId_4);
-		
-//---------------------------------------------	
-	//æ‰“å¼€è¾“å‡ºçš„Txtæ–‡æœ¬
-	oTxtFileId = $fopen("F:\\project\\Plate_Recognization\\simulation\\bmp_sim_plate_recognization\\PIC\\output_file.txt","w+");
 
-	//è¾“å‡ºç‰¹å¾å€¼
+//---------------------------------------------	
+	//´ò¿ªÊä³öµÄTxtÎÄ±¾
+	oTxtFileId = $fopen("../../../../../PIC/21_Su_A65NF7/output_file.txt","w+");
+
+	//Êä³öÌØÕ÷Öµ
 	for(i=0;i<8;i++)begin
 		for(j=0;j<8;j++) begin
 			$fdisplay(oTxtFileId,"%b",char_feature[i][7-j]);
 		end
 		$fdisplay(oTxtFileId,"\n");
-	end
-
-
-    //å°†æ•°ç»„ä¸­çš„æ•°æ®å†™åˆ°è¾“å‡ºTxtæ–‡æœ¬ä¸­
-	//$fwrite(oTxtFileId,"%p",rBmpData);
-	
-    //å…³é—­Txtæ–‡æœ¬
+	end    
+	//¹Ø±ÕTxtÎÄ±¾
     $fclose(oTxtFileId);
 
 end  
@@ -194,7 +159,7 @@ end
 
 
 //---------------------------------------------		
-//åˆå§‹åŒ–æ—¶é’Ÿå’Œå¤ä½ä¿¡å·
+//³õÊ¼»¯Ê±ÖÓºÍ¸´Î»ĞÅºÅ
 initial begin
     clk     = 1;
     rst_n   = 0;
@@ -202,11 +167,11 @@ initial begin
     rst_n   = 1;
 end 
 
-//äº§ç”Ÿ50MHzæ—¶é’Ÿ
+//²úÉú50MHzÊ±ÖÓ
 always #10 clk = ~clk;
  
 //---------------------------------------------		
-//åœ¨æ—¶é’Ÿé©±åŠ¨ä¸‹ï¼Œä»æ•°ç»„ä¸­è¯»å‡ºåƒç´ æ•°æ®ï¼Œç”¨äºåœ¨Modelsimä¸­æŸ¥çœ‹BMPä¸­çš„æ•°æ® 
+//ÔÚÊ±ÖÓÇı¶¯ÏÂ£¬´ÓÊı×éÖĞ¶Á³öÏñËØÊı¾İ£¬ÓÃÓÚÔÚModelsimÖĞ²é¿´BMPÖĞµÄÊı¾İ 
 always@(posedge clk or negedge rst_n)begin
     if(!rst_n) begin
         pixel_data  <=  8'd0;
@@ -219,7 +184,7 @@ always@(posedge clk or negedge rst_n)begin
 end
  
 //---------------------------------------------
-//äº§ç”Ÿæ‘„åƒå¤´æ—¶åº 
+//²úÉúÉãÏñÍ·Ê±Ğò 
 
 wire		cmos_vsync ;
 reg			cmos_href;
@@ -246,7 +211,7 @@ localparam V_FRONT = 11'd1;
 localparam V_TOTAL = V_SYNC + V_BACK + V_DISP + V_FRONT;
 
 //---------------------------------------------
-//æ¨¡æ‹Ÿ OV7725/OV5640 é©±åŠ¨æ¨¡å—è¾“å‡ºçš„æ—¶é’Ÿä½¿èƒ½
+//Ä£Äâ OV7725/OV5640 Çı¶¯Ä£¿éÊä³öµÄÊ±ÖÓÊ¹ÄÜ
 always@(posedge clk or negedge rst_n) begin
 	if(!rst_n)
 		cmos_clken_r <= 0;
@@ -255,7 +220,7 @@ always@(posedge clk or negedge rst_n) begin
 end
 
 //---------------------------------------------
-//æ°´å¹³è®¡æ•°å™¨
+//Ë®Æ½¼ÆÊıÆ÷
 reg	[10:0]	hcnt;
 always@(posedge clk or negedge rst_n) begin
 	if(!rst_n)
@@ -265,7 +230,7 @@ always@(posedge clk or negedge rst_n) begin
 end
 
 //---------------------------------------------
-//ç«–ç›´è®¡æ•°å™¨
+//ÊúÖ±¼ÆÊıÆ÷
 reg	[10:0]	vcnt;
 always@(posedge clk or negedge rst_n) begin
 	if(!rst_n)
@@ -279,7 +244,7 @@ always@(posedge clk or negedge rst_n) begin
 end
 
 //---------------------------------------------
-//åœºåŒæ­¥
+//³¡Í¬²½
 reg	cmos_vsync_r;
 always@(posedge clk or negedge rst_n) begin
 	if(!rst_n)
@@ -294,7 +259,7 @@ end
 assign	cmos_vsync	= cmos_vsync_r;
 
 //---------------------------------------------
-//è¡Œæœ‰æ•ˆ
+//ĞĞÓĞĞ§
 wire	frame_valid_ahead =  ( vcnt >= V_SYNC + V_BACK  && vcnt < V_SYNC + V_BACK + V_DISP
                             && hcnt >= H_SYNC + H_BACK  && hcnt < H_SYNC + H_BACK + H_DISP ) 
 						? 1'b1 : 1'b0;
@@ -321,7 +286,7 @@ end
 assign cmos_clken = cmos_href & cmos_clken_r;
 
 //-------------------------------------
-//ä»æ•°ç»„ä¸­ä»¥è§†é¢‘æ ¼å¼è¾“å‡ºåƒç´ æ•°æ®
+//´ÓÊı×éÖĞÒÔÊÓÆµ¸ñÊ½Êä³öÏñËØÊı¾İ
 wire [10:0] x_pos;
 wire [10:0] y_pos;
 
@@ -341,7 +306,7 @@ always@(posedge clk or negedge rst_n)begin
 end
  
 //-------------------------------------
-//VIPç®—æ³•â€”â€”å½©è‰²è½¬ç°åº¦
+//VIPËã·¨¡ª¡ª²ÊÉ«×ª»Ò¶È
 
 wire 		per_frame_vsync	=	cmos_vsync ;	
 wire 		per_frame_href	=	cmos_href;	
@@ -382,7 +347,7 @@ VIP_RGB888_YCbCr444	u_VIP_RGB888_YCbCr444
 );
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”äºŒå€¼åŒ–
+//VIPËã·¨¡ª¡ª¶şÖµ»¯
 
 wire			post1_frame_vsync;
 wire			post1_frame_href ;
@@ -390,125 +355,56 @@ wire			post1_frame_clken;
 wire	     	post1_img_Bit    ;
 
 binarization u_binarization (
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post0_frame_vsync),	
-	.per_frame_href			(post0_frame_href),		
-	.per_frame_clken		(post0_frame_clken),	
-	.per_img_Y				(post0_img_Cb),			
+	.per_frame_vsync		(post0_frame_vsync	),	
+	.per_frame_href			(post0_frame_href	),		
+	.per_frame_clken		(post0_frame_clken	),	
+	.per_img_Y				(post0_img_Cb		),			
     
 	//Image data has been processd
-	.post_frame_vsync		(post1_frame_vsync),	
-	.post_frame_href		(post1_frame_href),		
-	.post_frame_clken		(post1_frame_clken),	
-	.post_img_Bit			(post1_img_Bit),		
+	.post_frame_vsync		(post1_frame_vsync	),	
+	.post_frame_href		(post1_frame_href	),		
+	.post_frame_clken		(post1_frame_clken	),	
+	.post_img_Bit			(post1_img_Bit		),		
 	
-	//äºŒå€¼åŒ–é˜ˆå€¼ 
-	.Binary_Threshold		(150)				
+	//¶şÖµ»¯ãĞÖµ 
+	.Binary_Threshold		(150				)				
 );
 
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”è…èš€
+//VIPËã·¨¡ª¡ª¸¯Ê´
 wire			post2_frame_vsync;	
 wire			post2_frame_href;	
 wire			post2_frame_clken;	
 wire			post2_img_Bit;		
 
-VIP_Bit_Erosion_Detector
-#(
-	.IMG_HDISP	(IMG_HDISP),	//640*480
-	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Bit_Erosion_Detector
-(
+VIP_Bit_Erosion_Detector#(
+	.IMG_HDISP				(IMG_HDISP			),	//640*480
+	.IMG_VDISP				(IMG_VDISP			)
+)u_VIP_Bit_Erosion_Detector(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post1_frame_vsync),	
-	.per_frame_href			(post1_frame_href),		
-	.per_frame_clken		(post1_frame_clken),	
-	.per_img_Bit			(post1_img_Bit),		
+	.per_frame_vsync		(post1_frame_vsync	),	
+	.per_frame_href			(post1_frame_href	),		
+	.per_frame_clken		(post1_frame_clken	),	
+	.per_img_Bit			(post1_img_Bit		),		
 
 	//Image data has been processd
-	.post_frame_vsync		(post2_frame_vsync),	
-	.post_frame_href		(post2_frame_href),		
-	.post_frame_clken		(post2_frame_clken),	
-	.post_img_Bit			(post2_img_Bit)			
+	.post_frame_vsync		(post2_frame_vsync	),	
+	.post_frame_href		(post2_frame_href	),		
+	.post_frame_clken		(post2_frame_clken	),	
+	.post_img_Bit			(post2_img_Bit		)			
 );
 
-/*
 //--------------------------------------
-//VIPç®—æ³•â€”â€”è†¨èƒ€
-wire			post3_frame_vsync;	
-wire			post3_frame_href;	
-wire			post3_frame_clken;	
-wire			post3_img_Bit;	
-	
-VIP_Bit_Dilation_Detector
-#(
-	.IMG_HDISP	(IMG_HDISP),	//640*480
-	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Bit_Dilation_Detector
-(
-	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
-
-	//Image data prepred to be processd
-	.per_frame_vsync		(post2_frame_vsync),	
-	.per_frame_href			(post2_frame_href),		
-	.per_frame_clken		(post2_frame_clken),	
-	.per_img_Bit			(post2_img_Bit),		
-
-	//Image data has been processd
-	.post_frame_vsync		(post3_frame_vsync),	
-	.post_frame_href		(post3_frame_href),		
-	.post_frame_clken		(post3_frame_clken),	
-	.post_img_Bit			(post3_img_Bit)			
-);
-
-
-//--------------------------------------
-//VIPç®—æ³•â€”â€”ä¸­å€¼æ»¤æ³¢
-
-wire			post1_frame_vsync;
-wire			post1_frame_href ;
-wire			post1_frame_clken;
-wire	[7:0]	post1_img_Y		 ;
-
-VIP_Gray_Median_Filter
-#(
-	.IMG_HDISP	(IMG_HDISP),	 
-	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Gray_Median_Filter (
-	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
-
-	//Image data prepred to be processd
-	.per_frame_vsync		(post0_frame_vsync),	
-	.per_frame_href			(post0_frame_href),		
-	.per_frame_clken		(post0_frame_clken),	
-	.per_img_Y				(post0_img_Y),			
-    
-
-	//Image data has been processd
-	.post_frame_vsync		(post1_frame_vsync),	
-	.post_frame_href		(post1_frame_href),		
-	.post_frame_clken		(post1_frame_clken),	
-	.post_img_Y				(post1_img_Y)			
-);
-*/
-
-//--------------------------------------
-//VIP ç®—æ³•â€”â€”Sobelè¾¹ç¼˜æ£€æµ‹
+//VIP Ëã·¨¡ª¡ªSobel±ßÔµ¼ì²â
 
 wire			post4_frame_vsync;	 
 wire			post4_frame_href;	 
@@ -516,85 +412,78 @@ wire			post4_frame_clken;
 wire			post4_img_Bit;		 
 
 VIP_Sobel_Edge_Detector #(
-	.IMG_HDISP	(IMG_HDISP),	 
-	.IMG_VDISP	(IMG_VDISP)
+	.IMG_HDISP				(IMG_HDISP	),	 
+	.IMG_VDISP				(IMG_VDISP	)
 ) u_VIP_Sobel_Edge_Detector (
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk		),  				
+	.rst_n					(rst_n		),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post2_frame_vsync),	
-	.per_frame_href			(post2_frame_href),		
-	.per_frame_clken		(post2_frame_clken),	
-	.per_img_Y				({8{post2_img_Bit}}),			
+	.per_frame_vsync		(post2_frame_vsync	),	
+	.per_frame_href			(post2_frame_href	),		
+	.per_frame_clken		(post2_frame_clken	),	
+	.per_img_Y				({8{post2_img_Bit}}	),			
 
 	//Image data has been processd
-	.post_frame_vsync		(post4_frame_vsync),	
-	.post_frame_href		(post4_frame_href),		
-	.post_frame_clken		(post4_frame_clken),	
-	.post_img_Bit			(post4_img_Bit),		
+	.post_frame_vsync		(post4_frame_vsync	),	
+	.post_frame_href		(post4_frame_href	),		
+	.post_frame_clken		(post4_frame_clken	),	
+	.post_img_Bit			(post4_img_Bit		),		
 	
 	//User interface
 	.Sobel_Threshold		(128)					
 );
 
-
 //--------------------------------------
-//VIPç®—æ³•â€”â€”æŠ•å½±å‰å…ˆè¿›è¡Œçº¿æ¡çš„è†¨èƒ€ï¼Œé˜²æ­¢è§’åº¦åç§»1åˆ°2ä¸ªåƒç´ 
+//VIPËã·¨¡ª¡ªÍ¶Ó°Ç°ÏÈ½øĞĞÏßÌõµÄÅòÕÍ£¬·ÀÖ¹½Ç¶ÈÆ«ÒÆ1µ½2¸öÏñËØ
 wire			post5_frame_vsync;	
 wire			post5_frame_href;	
 wire			post5_frame_clken;	
 wire			post5_img_Bit;	
 	
-VIP_Bit_Dilation_Detector
-#(
+VIP_Bit_Dilation_Detector#(
 	.IMG_HDISP	(IMG_HDISP),	//640*480
 	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Bit_Dilation_Detector
-(
+)u_VIP_Bit_Dilation_Detector(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post4_frame_vsync),	
-	.per_frame_href			(post4_frame_href),		
-	.per_frame_clken		(post4_frame_clken),	
-	.per_img_Bit			(post4_img_Bit),		
+	.per_frame_vsync		(post4_frame_vsync	),	
+	.per_frame_href			(post4_frame_href	),		
+	.per_frame_clken		(post4_frame_clken	),	
+	.per_img_Bit			(post4_img_Bit		),		
 
 	//Image data has been processd
-	.post_frame_vsync		(post5_frame_vsync),	
-	.post_frame_href		(post5_frame_href),		
-	.post_frame_clken		(post5_frame_clken),	
-	.post_img_Bit			(post5_img_Bit)			
+	.post_frame_vsync		(post5_frame_vsync	),	
+	.post_frame_href		(post5_frame_href	),		
+	.post_frame_clken		(post5_frame_clken	),	
+	.post_img_Bit			(post5_img_Bit		)			
 );
 
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”å¯¹æ•´å¸§å›¾åƒè¿›è¡Œç«–ç›´æŠ•å½±
+//VIPËã·¨¡ª¡ª¶ÔÕûÖ¡Í¼Ïñ½øĞĞÊúÖ±Í¶Ó°
 
 wire [9:0] 		max_line_left ;  
 wire [9:0] 		max_line_right;
 	
-VIP_vertical_projection
-#(
+VIP_vertical_projection#(
 	.IMG_HDISP	(IMG_HDISP),	//640*480
 	.IMG_VDISP	(IMG_VDISP),
 	
-	.EDGE_THROD	(45)			//è¾¹ç¼˜é˜ˆå€¼
-)
-u_VIP_vertical_projection
-(
+	.EDGE_THROD	(45)			//±ßÔµãĞÖµ
+)u_VIP_vertical_projection(
 	//global clock
 	.clk					(clk),  				
 	.rst_n					(rst_n),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post5_frame_vsync),	
-	.per_frame_href			(post5_frame_href),		
-	.per_frame_clken		(post5_frame_clken),	
-	.per_img_Bit			(post5_img_Bit),		
+	.per_frame_vsync		(post5_frame_vsync	),	
+	.per_frame_href			(post5_frame_href	),		
+	.per_frame_clken		(post5_frame_clken	),	
+	.per_img_Bit			(post5_img_Bit		),		
 
 	//Image data has been processd
 	.post_frame_vsync		(),	
@@ -603,36 +492,33 @@ u_VIP_vertical_projection
 	.post_img_Bit			(),
 
 
-	.max_line_left 			(max_line_left 	),  
-	.max_line_right			(max_line_right	),
+	.max_line_left 			(max_line_left 		),  
+	.max_line_right			(max_line_right		),
                              
-	.vertical_start			(0				), 
-	.vertical_end			(IMG_VDISP - 1	)   
+	.vertical_start			(0					), 
+	.vertical_end			(IMG_VDISP - 1		)   
 );
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”å¯¹æ•´å¸§å›¾åƒè¿›è¡Œæ°´å¹³æŠ•å½±
+//VIPËã·¨¡ª¡ª¶ÔÕûÖ¡Í¼Ïñ½øĞĞË®Æ½Í¶Ó°
 wire [9:0] 		max_line_up  ;  
 wire [9:0] 		max_line_down;
 	
-VIP_horizon_projection
-#(
+VIP_horizon_projection#(
 	.IMG_HDISP	(IMG_HDISP),	//640*480
 	.IMG_VDISP	(IMG_VDISP),
 	
-	.EDGE_THROD	(100)			//è¾¹ç¼˜é˜ˆå€¼
-)
-u_VIP_horizon_projection
-(
+	.EDGE_THROD	(100)			//±ßÔµãĞÖµ
+)u_VIP_horizon_projection(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post5_frame_vsync),	
-	.per_frame_href			(post5_frame_href),		
-	.per_frame_clken		(post5_frame_clken),	
-	.per_img_Bit			(post5_img_Bit),		
+	.per_frame_vsync		(post5_frame_vsync	),	
+	.per_frame_href			(post5_frame_href	),		
+	.per_frame_clken		(post5_frame_clken	),	
+	.per_img_Bit			(post5_img_Bit		),		
 
 	//Image data has been processd
 	.post_frame_vsync		(),	
@@ -640,33 +526,36 @@ u_VIP_horizon_projection
 	.post_frame_clken		(),	
 	.post_img_Bit			(),
 
-	.max_line_up  			(max_line_up  ),  
-	.max_line_down			(max_line_down),
+	.max_line_up  			(max_line_up  		),  
+	.max_line_down			(max_line_down		),
                              
-	.horizon_start			(0				), 
-	.horizon_end			(IMG_HDISP - 1	)   
+	.horizon_start			(0					), 
+	.horizon_end			(IMG_HDISP - 1		)   
 );
 
-//-------------------------------------
-//ä¿®æ­£è½¦ç‰Œçš„è¾¹ç•Œï¼Œä½¿å…¶åªåŒ…å«å­—ç¬¦åŒºåŸŸ
 
-wire [9:0] 	plate_boarder_up 	;  	//è°ƒæ•´åçš„è¾¹æ¡†
+
+
+//-------------------------------------
+//ĞŞÕı³µÅÆµÄ±ß½ç£¬Ê¹ÆäÖ»°üº¬×Ö·ûÇøÓò
+
+wire [9:0] 	plate_boarder_up 	;  	//µ÷ÕûºóµÄ±ß¿ò
 wire [9:0] 	plate_boarder_down	; 
 wire [9:0] 	plate_boarder_left 	;
 wire [9:0] 	plate_boarder_right	;
 
 plate_boarder_adjust u_plate_boarder_adjust(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post5_frame_vsync),	
+	.per_frame_vsync		(post5_frame_vsync	),	
 
-	.max_line_up  			(max_line_up  ),  
-	.max_line_down			(max_line_down),
-	.max_line_left 			(max_line_left 	),  
-	.max_line_right			(max_line_right	),
+	.max_line_up  			(max_line_up  		),  
+	.max_line_down			(max_line_down		),
+	.max_line_left 			(max_line_left 		),  
+	.max_line_right			(max_line_right		),
 	
     .plate_boarder_up 	    (plate_boarder_up 	),
     .plate_boarder_down	    (plate_boarder_down	),
@@ -678,7 +567,7 @@ plate_boarder_adjust u_plate_boarder_adjust(
 
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”å¯¹å­—ç¬¦åŒºåŸŸè¿›è¡ŒäºŒå€¼åŒ–
+//VIPËã·¨¡ª¡ª¶Ô×Ö·ûÇøÓò½øĞĞ¶şÖµ»¯
 
 
 wire			post8_frame_vsync;
@@ -686,29 +575,27 @@ wire			post8_frame_href ;
 wire			post8_frame_clken;
 wire	     	post8_img_Bit    ;
 
-binarization_char 
-#(
+binarization_char #(
 	.IMG_HDISP	(IMG_HDISP),	//640*480
 	.IMG_VDISP	(IMG_VDISP)
-)
-u_binarization_char (
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+)u_binarization_char (
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
-	//Image data prepred to be processd
-	.per_frame_vsync		(per_frame_vsync),		
-	.per_frame_href			(per_frame_href),		
-	.per_frame_clken		(per_frame_clken),		
-	.per_img_Y				(per_img_red),			
+	//Image data prepred to be processd	
+	.per_frame_vsync		(per_frame_vsync	),		
+	.per_frame_href			(per_frame_href		),		
+	.per_frame_clken		(per_frame_clken	),		
+	.per_img_Y				(per_img_red		),			
     
 	//Image data has been processd
-	.post_frame_vsync		(post8_frame_vsync),	
-	.post_frame_href		(post8_frame_href),		
-	.post_frame_clken		(post8_frame_clken),	
-	.post_img_Bit			(post8_img_Bit),		
+	.post_frame_vsync		(post8_frame_vsync	),	
+	.post_frame_href		(post8_frame_href	),		
+	.post_frame_clken		(post8_frame_clken	),	
+	.post_img_Bit			(post8_img_Bit		),
 	
-	//äºŒå€¼åŒ–é˜ˆå€¼ 
-	.Binary_Threshold		(128),
+	//¶şÖµ»¯ãĞÖµ 
+	.Binary_Threshold		(128				),
 
     .plate_boarder_up 	    (plate_boarder_up 	),
     .plate_boarder_down	    (plate_boarder_down	),
@@ -718,71 +605,65 @@ u_binarization_char (
 );
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”è…èš€
+//VIPËã·¨¡ª¡ª¸¯Ê´
 wire			post9_frame_vsync;	
 wire			post9_frame_href;	
 wire			post9_frame_clken;	
 wire			post9_img_Bit;		
 
-VIP_Bit_Erosion_Detector
-#(
+VIP_Bit_Erosion_Detector#(
 	.IMG_HDISP	(IMG_HDISP),	//640*480
 	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Bit_Erosion_Detector_red
-(
+)u_VIP_Bit_Erosion_Detector_red(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post8_frame_vsync),	
-	.per_frame_href			(post8_frame_href),		
-	.per_frame_clken		(post8_frame_clken),	
-	.per_img_Bit			(post8_img_Bit),		
+	.per_frame_vsync		(post8_frame_vsync	),	
+	.per_frame_href			(post8_frame_href	),		
+	.per_frame_clken		(post8_frame_clken	),	
+	.per_img_Bit			(post8_img_Bit		),		
 
 	//Image data has been processd
-	.post_frame_vsync		(post9_frame_vsync),	
-	.post_frame_href		(post9_frame_href),		
-	.post_frame_clken		(post9_frame_clken),	
-	.post_img_Bit			(post9_img_Bit)			
+	.post_frame_vsync		(post9_frame_vsync	),	
+	.post_frame_href		(post9_frame_href	),		
+	.post_frame_clken		(post9_frame_clken	),	
+	.post_img_Bit			(post9_img_Bit		)			
 );
 
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”è†¨èƒ€
+//VIPËã·¨¡ª¡ªÅòÕÍ
 wire			post10_frame_vsync;	
 wire			post10_frame_href;	
 wire			post10_frame_clken;	
 wire			post10_img_Bit;	
 	
-VIP_Bit_Dilation_Detector
-#(
-	.IMG_HDISP	(IMG_HDISP),	//640*480
-	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Bit_Dilation_Detector_red
-(
+VIP_Bit_Dilation_Detector#(
+	.IMG_HDISP				(IMG_HDISP			),	//640*480
+	.IMG_VDISP				(IMG_VDISP			)
+)u_VIP_Bit_Dilation_Detector_red(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk				),  				
+	.rst_n					(rst_n				),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post9_frame_vsync),	
-	.per_frame_href			(post9_frame_href),		
-	.per_frame_clken		(post9_frame_clken),	
-	.per_img_Bit			(post9_img_Bit),		
+	.per_frame_vsync		(post9_frame_vsync	),	
+	.per_frame_href			(post9_frame_href	),		
+	.per_frame_clken		(post9_frame_clken	),	
+	.per_img_Bit			(post9_img_Bit		),		
 
 	//Image data has been processd
-	.post_frame_vsync		(post10_frame_vsync),	
-	.post_frame_href		(post10_frame_href),		
-	.post_frame_clken		(post10_frame_clken),	
-	.post_img_Bit			(post10_img_Bit)			
+	.post_frame_vsync		(post10_frame_vsync	),	
+	.post_frame_href		(post10_frame_href	),		
+	.post_frame_clken		(post10_frame_clken	),	
+	.post_img_Bit			(post10_img_Bit		)			
 );
 
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”å­—ç¬¦åŒºåŸŸè¿›è¡Œç«–ç›´æŠ•å½±
+//VIPËã·¨¡ª¡ª×Ö·ûÇøÓò½øĞĞÊúÖ±Í¶Ó°
 wire			post11_frame_vsync;	
 wire			post11_frame_href;	
 wire			post11_frame_clken;	
@@ -790,53 +671,47 @@ wire			post11_img_Bit;
 
 wire [20:0] 	char_boarder[7:0];
 	
-VIP_vertical_projection_char
-#(
-	.IMG_HDISP	(IMG_HDISP),	//640*480
-	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_vertical_projection_char
-(
+VIP_vertical_projection_char#(
+	.IMG_HDISP				(IMG_HDISP				),	//640*480
+	.IMG_VDISP				(IMG_VDISP				)
+)u_VIP_vertical_projection_char(
 	//global clock
-	.clk					(clk),  				
-	.rst_n					(rst_n),				
+	.clk					(clk					),  				
+	.rst_n					(rst_n					),				
 
 	//Image data prepred to be processd
-	.per_frame_vsync		(post10_frame_vsync	),	
-	.per_frame_href			(post10_frame_href	),		
-	.per_frame_clken		(post10_frame_clken	),	
-	.per_img_Bit			(post10_img_Bit		),		
+	.per_frame_vsync		(post10_frame_vsync		),	
+	.per_frame_href			(post10_frame_href		),		
+	.per_frame_clken		(post10_frame_clken		),	
+	.per_img_Bit			(post10_img_Bit			),		
 
 	//Image data has been processd
-	.post_frame_vsync		(post11_frame_vsync	),	
-	.post_frame_href		(post11_frame_href	),		
-	.post_frame_clken		(post11_frame_clken	),	
-	.post_img_Bit			(post11_img_Bit		),
+	.post_frame_vsync		(post11_frame_vsync		),	
+	.post_frame_href		(post11_frame_href		),		
+	.post_frame_clken		(post11_frame_clken		),	
+	.post_img_Bit			(post11_img_Bit			),
 
-	.char_boarder			(char_boarder),
+	.char_boarder			(char_boarder			),
 	
-	.vertical_start			(0				), 		//è½¦ç‰ŒèŒƒå›´ä»¥å¤–çš„å…¶ä»–è¡Œï¼Œå·²ç»åœ¨äºŒå€¼åŒ–çš„æ—¶å€™è¢«è¿‡æ»¤æ‰äº†
-	.vertical_end			(IMG_VDISP - 1	),
+	.vertical_start			(0						), 	//³µÅÆ·¶Î§ÒÔÍâµÄÆäËûĞĞ£¬ÒÑ¾­ÔÚ¶şÖµ»¯µÄÊ±ºò±»¹ıÂËµôÁË
+	.vertical_end			(IMG_VDISP - 1			),
 	
-    .plate_boarder_left     (plate_boarder_left ),  //è½¦ç‰Œæ¨ªå‘åæ ‡ï¼Œç”¨äºæ’é™¤ç¬¬ä¸€ä¸ªæ±‰å­—ä¸ºå·¦å³ç»“æ„æ—¶ï¼Œå¯¼è‡´è¯†åˆ«æˆä¸¤ä¸ªå­—ç¬¦
-    .plate_boarder_right    (plate_boarder_right) 	
+    .plate_boarder_left     (plate_boarder_left 	),  //³µÅÆºáÏò×ø±ê£¬ÓÃÓÚÅÅ³ıµÚÒ»¸öºº×ÖÎª×óÓÒ½á¹¹Ê±£¬µ¼ÖÂÊ¶±ğ³ÉÁ½¸ö×Ö·û
+    .plate_boarder_right    (plate_boarder_right	) 	
 );
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”å­—ç¬¦åŒºåŸŸè¿›è¡Œæ°´å¹³æŠ•å½±
+//VIPËã·¨¡ª¡ª×Ö·ûÇøÓò½øĞĞË®Æ½Í¶Ó°
 
 wire [9:0] 	char_top  ;
 wire [9:0] 	char_down;
 	
-VIP_horizon_projection_char
-#(
+VIP_horizon_projection_char#(
 	.IMG_HDISP	(IMG_HDISP),	//640*480
 	.IMG_VDISP	(IMG_VDISP),
 	
-	.EDGE_THROD	(14)			//åƒç´ å˜åŒ–è¶…è¿‡7*2æ¬¡ï¼Œè¡¨ç¤ºåˆ°è¾¾è¾¹ç•Œä½ç½®
-)
-u_VIP_horizon_projection_char
-(
+	.EDGE_THROD	(14)			//ÏñËØ±ä»¯³¬¹ı7*2´Î£¬±íÊ¾µ½´ï±ß½çÎ»ÖÃ
+)u_VIP_horizon_projection_char(
 	//global clock
 	.clk					(clk),  				
 	.rst_n					(rst_n),				
@@ -856,14 +731,14 @@ u_VIP_horizon_projection_char
 	.char_top 				(char_top ),
 	.char_down				(char_down),
                              
-	.horizon_start			(0				), //è½¦ç‰ŒèŒƒå›´ä»¥å¤–çš„å…¶ä»–åˆ—ï¼Œå·²ç»åœ¨äºŒå€¼åŒ–çš„æ—¶å€™è¢«è¿‡æ»¤æ‰äº†
+	.horizon_start			(0				), //³µÅÆ·¶Î§ÒÔÍâµÄÆäËûÁĞ£¬ÒÑ¾­ÔÚ¶şÖµ»¯µÄÊ±ºò±»¹ıÂËµôÁË
 	.horizon_end			(IMG_HDISP - 1	)
 );
 
 //--------------------------------------
-//VIPç®—æ³•â€”â€”ç‰¹å¾è¯†åˆ«
+//VIPËã·¨¡ª¡ªÌØÕ÷Ê¶±ğ
 	
-//è…èš€å’Œè†¨èƒ€åä¼šåœ¨ç«–ç›´æ–¹å‘å·®ç”Ÿåç§»ï¼Œéœ€è¦è¿›è¡Œè°ƒæ•´
+//¸¯Ê´ºÍÅòÕÍºó»áÔÚÊúÖ±·½Ïò²îÉúÆ«ÒÆ£¬ĞèÒª½øĞĞµ÷Õû
 	
 plate_feature_recognize
 #(
@@ -897,9 +772,9 @@ u_plate_feature_recognize
 
 wire exist;
 //--------------------------------------
-// //VIPç®—æ³•â€”â€”å·ç§¯æ¨¡æ¿åŒ¹é…
+// //VIPËã·¨¡ª¡ª¾í»ıÄ£°åÆ¥Åä
 
-// wire [0:4] 	char_feature_updown  [7:0] [7:0] ;		//ç‰¹å¾ç»“æœä¸Šä¸‹ç¿»è½¬
+// wire [0:4] 	char_feature_updown  [7:0] [7:0] ;		//ÌØÕ÷½á¹ûÉÏÏÂ·­×ª
 
 // assign char_feature_updown[j][0] = char_feature[j][7];
 // assign char_feature_updown[j][1] = char_feature[j][6];
@@ -910,8 +785,8 @@ wire exist;
 // assign char_feature_updown[j][6] = char_feature[j][1];
 // assign char_feature_updown[j][7] = char_feature[j][0];
 
-wire [7:0]	char_index [7:0];	//åŒ¹é…çš„å­—ç¬¦ç´¢å¼•
-wire		match_valid		;	//åŒ¹é…æˆåŠŸæ ‡å¿—
+wire [7:0]	char_index [7:0];	//Æ¥ÅäµÄ×Ö·ûË÷Òı
+wire		match_valid		;	//Æ¥Åä³É¹¦±êÖ¾
 
 conv_template_match conv_template_match(
 	.clk					(clk),  				
@@ -925,16 +800,16 @@ conv_template_match conv_template_match(
 );
 
 //-------------------------------------
-//è§†é¢‘æ˜¾ç¤ºé©±åŠ¨
+//ÊÓÆµÏÔÊ¾Çı¶¯
 
 wire video_hs;
 wire video_vs;
 wire video_de;
 
-wire [10:0]  pixel_xpos;          //åƒç´ ç‚¹æ¨ªåæ ‡
-wire [10:0]  pixel_ypos;          //åƒç´ ç‚¹çºµåæ ‡   
+wire [10:0]  pixel_xpos;          //ÏñËØµãºá×ø±ê
+wire [10:0]  pixel_ypos;          //ÏñËØµã×İ×ø±ê   
 
-//ä¾‹åŒ–è§†é¢‘æ˜¾ç¤ºé©±åŠ¨æ¨¡å—
+//Àı»¯ÊÓÆµÏÔÊ¾Çı¶¯Ä£¿é
 video_driver u_video_driver(
     .pixel_clk      (clk),
     .sys_rst_n      (rst_n),
@@ -954,7 +829,7 @@ video_driver u_video_driver(
     wire   [3:0]         VGA_B;
 	
 
-//lcdæ˜¾ç¤ºæ¨¡å—    
+//lcdÏÔÊ¾Ä£¿é    
 lcd_display u_lcd_display(          
     .lcd_clk        (clk),    
     .sys_rst_n      (rst_n ),
@@ -1005,80 +880,40 @@ wire [7:0]	PIC3_vip_out_img_R     ;
 wire [7:0]	PIC3_vip_out_img_G     ;   
 wire [7:0]	PIC3_vip_out_img_B     ; 
 
-// //ç¬¬ä¸€å¼ è¾“å‡ºç°åº¦è½¬æ¢ä¹‹åçš„Y
-// assign PIC1_vip_out_frame_vsync 	= post0_frame_vsync;   
-// assign PIC1_vip_out_frame_href  	= post0_frame_href ;   
-// assign PIC1_vip_out_frame_clken 	= post0_frame_clken; 
-// assign PIC1_vip_out_img_R 			= post0_img_Y;
-// assign PIC1_vip_out_img_G 			= post0_img_Y;
-// assign PIC1_vip_out_img_B 			= post0_img_Y;
 
-// //ç¬¬äºŒå¼ è¾“å‡ºå½©è‰²å›¾åƒçš„B
-// assign PIC2_vip_out_frame_vsync 	= per_frame_vsync	;	   
-// assign PIC2_vip_out_frame_href  	= per_frame_href	;	   
-// assign PIC2_vip_out_frame_clken 	= per_frame_clken	;	 
-// assign PIC2_vip_out_img_R 			= per_img_blue		;	
-// assign PIC2_vip_out_img_G 			= per_img_blue		;	
-// assign PIC2_vip_out_img_B 			= per_img_blue		;	
+//µÚÒ»ÕÅÊä³öSobel±ßÔµ¼ì²âÖ®ºóµÄ½á¹û
+assign PIC1_vip_out_frame_vsync 	= 	post4_frame_vsync ;   
+assign PIC1_vip_out_frame_href  	= 	post4_frame_href  ;   
+assign PIC1_vip_out_frame_clken 	= 	post4_frame_clken ;  
+assign PIC1_vip_out_img_R        	= 	{8{post4_img_Bit}};   
+assign PIC1_vip_out_img_G        	= 	{8{post4_img_Bit}};   
+assign PIC1_vip_out_img_B        	= 	{8{post4_img_Bit}}; 
 
-//ç¬¬ä¸‰å¼ è¾“å‡ºå½©è‰²å›¾åƒçš„R
-assign PIC3_vip_out_frame_vsync 	= 	post10_frame_vsync ;//	per_frame_vsync	;  
-assign PIC3_vip_out_frame_href  	= 	post10_frame_href  ;//	per_frame_href	;  
-assign PIC3_vip_out_frame_clken 	= 	post10_frame_clken ;//	per_frame_clken	;
-assign PIC3_vip_out_img_R        	= 	{8{post10_img_Bit}};//	per_img_red		;
-assign PIC3_vip_out_img_G        	= 	{8{post10_img_Bit}};//	per_img_red		;
-assign PIC3_vip_out_img_B        	= 	{8{post10_img_Bit}};//	per_img_red		;
+//µÚ¶şÕÅÊä³öÖĞÖµÂË²¨Ö®ºóµÄ½á¹û
+assign PIC2_vip_out_frame_vsync 	=  	post5_frame_vsync ;   
+assign PIC2_vip_out_frame_href  	=  	post5_frame_href  ;   
+assign PIC2_vip_out_frame_clken 	=  	post5_frame_clken ; 
+assign PIC2_vip_out_img_R 			=  	{8{post5_img_Bit}};
+assign PIC2_vip_out_img_G 			=  	{8{post5_img_Bit}};
+assign PIC2_vip_out_img_B 			=  	{8{post5_img_Bit}};
 
-//ç¬¬ä¸€å¼ è¾“å‡ºç°åº¦è½¬æ¢ä¹‹åçš„Cb
- assign PIC1_vip_out_frame_vsync 	= post0_frame_vsync	; 	   
- assign PIC1_vip_out_frame_href  	= post0_frame_href 	; 	   
- assign PIC1_vip_out_frame_clken 	= post0_frame_clken	; 	 
- assign PIC1_vip_out_img_R 			= post0_img_Cb		;	
- assign PIC1_vip_out_img_G 			= post0_img_Cb		;	
- assign PIC1_vip_out_img_B 			= post0_img_Cb		;
-
-//ç¬¬ä¸€å¼ è¾“å‡ºäºŒå€¼åŒ–ä¹‹åçš„ç»“æœ 
-//assign PIC1_vip_out_frame_vsync 	= post2_frame_vsync;     	   
-//assign PIC1_vip_out_frame_href  	= post2_frame_href ;     	   
-//assign PIC1_vip_out_frame_clken 	= post2_frame_clken;  	 	 
-//assign PIC1_vip_out_img_R 			= {8{post2_img_Bit}}; 	  	
-//assign PIC1_vip_out_img_G 			= {8{post2_img_Bit}}; 	 	
-//assign PIC1_vip_out_img_B 			= {8{post2_img_Bit}};  
-
-//ç¬¬äºŒå¼ è¾“å‡ºè…èš€ä¹‹åçš„ç»“æœ 
-assign PIC2_vip_out_frame_vsync 	= post5_frame_vsync;   	   
-assign PIC2_vip_out_frame_href  	= post5_frame_href ;   	   
-assign PIC2_vip_out_frame_clken 	= post5_frame_clken;  
-assign PIC2_vip_out_img_R 			= {8{post5_img_Bit}};  
-assign PIC2_vip_out_img_G 			= {8{post5_img_Bit}};  
-assign PIC2_vip_out_img_B 			= {8{post5_img_Bit}}; 
-
-//ç¬¬äºŒå¼ è¾“å‡ºä¸­å€¼æ»¤æ³¢ä¹‹åçš„ç»“æœ
-// assign PIC2_vip_out_frame_vsync 	= post1_frame_vsync;   
-// assign PIC2_vip_out_frame_href  	= post1_frame_href ;   
-// assign PIC2_vip_out_frame_clken 	= post1_frame_clken; 
-// assign PIC2_vip_out_img_R 			= post1_img_Y;
-// assign PIC2_vip_out_img_G 			= post1_img_Y;
-// assign PIC2_vip_out_img_B 			= post1_img_Y;
-
-//ç¬¬ä¸‰å¼ è¾“å‡ºSobelè¾¹ç¼˜æ£€æµ‹ä¹‹åçš„ç»“æœ
-// assign PIC3_vip_out_frame_vsync 	= post8_frame_vsync ;   
-// assign PIC3_vip_out_frame_href  	= post8_frame_href  ;   
-// assign PIC3_vip_out_frame_clken 	= post8_frame_clken ;  
-// assign PIC3_vip_out_img_R        	= {8{post8_img_Bit}};   
-// assign PIC3_vip_out_img_G        	= {8{post8_img_Bit}};   
-// assign PIC3_vip_out_img_B        	= {8{post8_img_Bit}}; 
+//µÚÈıÕÅÊä³ö»Ò¶È×ª»»Ö®ºóµÄCb
+ assign PIC3_vip_out_frame_vsync 	=	post10_frame_vsync ; 	   
+ assign PIC3_vip_out_frame_href  	=	post10_frame_href  ; 	   
+ assign PIC3_vip_out_frame_clken 	=	post10_frame_clken ; 	 
+ assign PIC3_vip_out_img_R 			=	{8{post10_img_Bit}};	
+ assign PIC3_vip_out_img_G 			=	{8{post10_img_Bit}};	
+ assign PIC3_vip_out_img_B 			=	{8{post10_img_Bit}};
 
 
 
-
-//å¯„å­˜å›¾åƒå¤„ç†ä¹‹åçš„åƒç´ æ•°æ®
+//¼Ä´æÍ¼Ïñ´¦ÀíÖ®ºóµÄÏñËØÊı¾İ
 
 //-------------------------------------
-//ç¬¬ä¸€å¼ å›¾
+//µÚÒ»ÕÅÍ¼
 reg [31:0]  PIC1_vip_cnt;
-reg         PIC1_vip_vsync_r;    //å¯„å­˜VIPè¾“å‡ºçš„åœºåŒæ­¥ 
-reg         PIC1_vip_out_en;     //å¯„å­˜VIPå¤„ç†å›¾åƒçš„ä½¿èƒ½ä¿¡å·ï¼Œä»…ç»´æŒä¸€å¸§çš„æ—¶é—´
+reg         PIC1_vip_vsync_r;    //¼Ä´æVIPÊä³öµÄ³¡Í¬²½ 
+reg         PIC1_vip_out_en;     //¼Ä´æVIP´¦ÀíÍ¼ÏñµÄÊ¹ÄÜĞÅºÅ£¬½öÎ¬³ÖÒ»Ö¡µÄÊ±¼ä
 
 always@(posedge clk or negedge rst_n)begin
    if(!rst_n) 
@@ -1090,7 +925,7 @@ end
 always@(posedge clk or negedge rst_n)begin
    if(!rst_n) 
         PIC1_vip_out_en    <=  1'b1;
-   else if(PIC1_vip_vsync_r & (!PIC1_vip_out_frame_vsync))  //ç¬¬ä¸€å¸§ç»“æŸä¹‹åï¼Œä½¿èƒ½æ‹‰ä½
+   else if(PIC1_vip_vsync_r & (!PIC1_vip_out_frame_vsync))  //µÚÒ»Ö¡½áÊøÖ®ºó£¬Ê¹ÄÜÀ­µÍ
         PIC1_vip_out_en    <=  1'b0;
 end
 
@@ -1109,11 +944,11 @@ always@(posedge clk or negedge rst_n)begin
 end
 
 //-------------------------------------
-//ç¬¬äºŒå¼ å›¾
+//µÚ¶şÕÅÍ¼
 
 reg [31:0]  PIC2_vip_cnt;
-reg         PIC2_vip_vsync_r;    //å¯„å­˜VIPè¾“å‡ºçš„åœºåŒæ­¥ 
-reg         PIC2_vip_out_en;     //å¯„å­˜VIPå¤„ç†å›¾åƒçš„ä½¿èƒ½ä¿¡å·ï¼Œä»…ç»´æŒä¸€å¸§çš„æ—¶é—´
+reg         PIC2_vip_vsync_r;    //¼Ä´æVIPÊä³öµÄ³¡Í¬²½ 
+reg         PIC2_vip_out_en;     //¼Ä´æVIP´¦ÀíÍ¼ÏñµÄÊ¹ÄÜĞÅºÅ£¬½öÎ¬³ÖÒ»Ö¡µÄÊ±¼ä
 
 always@(posedge clk or negedge rst_n)begin
    if(!rst_n) 
@@ -1125,7 +960,7 @@ end
 always@(posedge clk or negedge rst_n)begin
    if(!rst_n) 
         PIC2_vip_out_en    <=  1'b1;
-   else if(PIC2_vip_vsync_r & (!PIC2_vip_out_frame_vsync))  //ç¬¬ä¸€å¸§ç»“æŸä¹‹åï¼Œä½¿èƒ½æ‹‰ä½
+   else if(PIC2_vip_vsync_r & (!PIC2_vip_out_frame_vsync))  //µÚÒ»Ö¡½áÊøÖ®ºó£¬Ê¹ÄÜÀ­µÍ
         PIC2_vip_out_en    <=  1'b0;
 end
 
@@ -1144,10 +979,10 @@ always@(posedge clk or negedge rst_n)begin
 end
 
 //-------------------------------------
-//ç¬¬ä¸‰å¼ å›¾
+//µÚÈıÕÅÍ¼
 reg [31:0]  PIC3_vip_cnt;
-reg         PIC3_vip_vsync_r;    //å¯„å­˜VIPè¾“å‡ºçš„åœºåŒæ­¥ 
-reg         PIC3_vip_out_en;     //å¯„å­˜VIPå¤„ç†å›¾åƒçš„ä½¿èƒ½ä¿¡å·ï¼Œä»…ç»´æŒä¸€å¸§çš„æ—¶é—´
+reg         PIC3_vip_vsync_r;    //¼Ä´æVIPÊä³öµÄ³¡Í¬²½ 
+reg         PIC3_vip_out_en;     //¼Ä´æVIP´¦ÀíÍ¼ÏñµÄÊ¹ÄÜĞÅºÅ£¬½öÎ¬³ÖÒ»Ö¡µÄÊ±¼ä
 
 always@(posedge clk or negedge rst_n)begin
    if(!rst_n) 
@@ -1167,11 +1002,11 @@ always@(posedge clk or negedge rst_n)begin
 		PIC3_vip_out_en	<=  1'b0;
 		frame_2nd_en 	<= 	1'b0;
 	end
-	else if((!frame_2nd_en) & PIC3_vip_out_frame_vsync & (!PIC3_vip_vsync_r)) begin //ç¬¬ä¸€å¸§ç»“æŸä¹‹åï¼Œæ‹‰é«˜ç¬¬äºŒå¸§ä½¿èƒ½
+	else if((!frame_2nd_en) & PIC3_vip_out_frame_vsync & (!PIC3_vip_vsync_r)) begin //µÚÒ»Ö¡½áÊøÖ®ºó£¬À­¸ßµÚ¶şÖ¡Ê¹ÄÜ
         PIC3_vip_out_en	<=  1'b1;
 		frame_2nd_en 	<= 	1'b1;
 	end
-	else if(PIC3_vip_vsync_r & (!PIC3_vip_out_frame_vsync))  //ç¬¬äºŒå¸§ç»“æŸä¹‹åï¼Œä½¿èƒ½æ‹‰ä½
+	else if(PIC3_vip_vsync_r & (!PIC3_vip_out_frame_vsync))  //µÚ¶şÖ¡½áÊøÖ®ºó£¬Ê¹ÄÜÀ­µÍ
         PIC3_vip_out_en    <=  1'b0;
 end
 
@@ -1190,7 +1025,7 @@ always@(posedge clk or negedge rst_n)begin
 end
 
 //-------------------------------------
-//ç¬¬å››å¼ å›¾
+//µÚËÄÕÅÍ¼
 reg [31:0] vip_cnt;
 
 wire [7:0]	vip_out_img_R;   
@@ -1206,8 +1041,8 @@ wire out_border_flag;
 assign out_border_flag = VGA_R[0] | VGA_G[0] | VGA_B[0];
 
  
-reg    vip_vsync_r;    //å¯„å­˜VIPè¾“å‡ºçš„åœºåŒæ­¥ 
-reg    vip_out_en;     //å¯„å­˜VIPå¤„ç†å›¾åƒçš„ä½¿èƒ½ä¿¡å·ï¼Œä»…ç»´æŒä¸€å¸§çš„æ—¶é—´
+reg    vip_vsync_r;    //¼Ä´æVIPÊä³öµÄ³¡Í¬²½ 
+reg    vip_out_en;     //¼Ä´æVIP´¦ÀíÍ¼ÏñµÄÊ¹ÄÜĞÅºÅ£¬½öÎ¬³ÖÒ»Ö¡µÄÊ±¼ä
 
 always@(posedge clk or negedge rst_n)begin
    if(!rst_n) 
@@ -1223,11 +1058,11 @@ always@(posedge clk or negedge rst_n)begin
         vip_out_en		<=	1'b0;
 		frame_3rd_en	<= 1'b0;
 	end
-	else if((PIC1_vip_out_en == 1)||(PIC3_vip_out_en == 1)) begin 		//å‰ä¸¤å¸§å›¾åƒå¤„ç†è¿‡ç¨‹ä¸­ï¼Œä½¿èƒ½æ‹‰ä½
+	else if((PIC1_vip_out_en == 1)||(PIC3_vip_out_en == 1)) begin 		//Ç°Á½Ö¡Í¼Ïñ´¦Àí¹ı³ÌÖĞ£¬Ê¹ÄÜÀ­µÍ
 		vip_out_en    	<=	1'b0;
 		frame_3rd_en	<=	1'b0;
 	end
-	else  if((!frame_3rd_en) & video_vs & (!vip_vsync_r)) begin //ç¬¬äºŒå¸§ç»“æŸä¹‹åï¼Œä½¿èƒ½æ‹‰é«˜
+	else  if((!frame_3rd_en) & video_vs & (!vip_vsync_r)) begin //µÚ¶şÖ¡½áÊøÖ®ºó£¬Ê¹ÄÜÀ­¸ß
         vip_out_en    	<=  1'b1;
 		frame_3rd_en	<= 	1'b1;
 	end

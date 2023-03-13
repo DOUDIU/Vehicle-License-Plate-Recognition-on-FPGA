@@ -63,32 +63,33 @@ wire			matrix_frame_clken;	//Prepared Image data output/capture enable clock
 wire			matrix_p11, matrix_p12, matrix_p13;	//3X3 Matrix output
 wire			matrix_p21, matrix_p22, matrix_p23;
 wire			matrix_p31, matrix_p32, matrix_p33;
-VIP_Matrix_Generate_3X3_1Bit	
-#(
-	.IMG_HDISP	(IMG_HDISP),	//640*480
-	.IMG_VDISP	(IMG_VDISP)
-)
-u_VIP_Matrix_Generate_3X3_1Bit
+
+matrix_generate_3x3  #(
+    .DATA_WIDTH				(1						),
+    .DATA_DEPTH				(IMG_HDISP				)
+)u_matrix_generate_3x3
 (
-	//global clock
-	.clk					(clk),  				//cmos video pixel clock
-	.rst_n					(rst_n),				//global reset
+    .clk					(clk					),  
+    .rst_n					(rst_n					),
 
-	//Image data prepred to be processd
-	.per_frame_vsync		(per_frame_vsync),		//Prepared Image data vsync valid signal
-	.per_frame_href			(per_frame_href),		//Prepared Image data href vaild  signal
-	.per_frame_clken		(per_frame_clken),		//Prepared Image data output/capture enable clock
-	.per_img_Bit			(per_img_Bit),			//Prepared Image brightness input
-
-	//Image data has been processd
-	.matrix_frame_vsync		(matrix_frame_vsync),	//Processed Image data vsync valid signal
-	.matrix_frame_href		(matrix_frame_href),	//Processed Image data href vaild  signal
-	.matrix_frame_clken		(matrix_frame_clken),	//Processed Image data output/capture enable clock	
-	.matrix_p11(matrix_p11),	.matrix_p12(matrix_p12), 	.matrix_p13(matrix_p13),	//3X3 Matrix output
-	.matrix_p21(matrix_p21), 	.matrix_p22(matrix_p22), 	.matrix_p23(matrix_p23),
-	.matrix_p31(matrix_p31), 	.matrix_p32(matrix_p32), 	.matrix_p33(matrix_p33)
+    .per_frame_vsync		(per_frame_vsync		),
+    .per_frame_href			(per_frame_href			),
+    .per_frame_clken		(per_frame_clken		),
+    .per_img_y				(per_img_Bit			),
+    
+    .matrix_frame_vsync		(matrix_frame_vsync		),
+    .matrix_frame_href		(matrix_frame_href		),
+    .matrix_frame_clken		(matrix_frame_clken		),
+    .matrix_p11				(matrix_p11				),
+    .matrix_p12				(matrix_p12				), 
+    .matrix_p13				(matrix_p13				),
+    .matrix_p21				(matrix_p21				), 
+    .matrix_p22				(matrix_p22				), 
+    .matrix_p23				(matrix_p23				),
+    .matrix_p31				(matrix_p31				), 
+    .matrix_p32				(matrix_p32				), 
+    .matrix_p33				(matrix_p33				)
 );
-
 
 //Add you arithmetic here
 //----------------------------------------------------------------------------
