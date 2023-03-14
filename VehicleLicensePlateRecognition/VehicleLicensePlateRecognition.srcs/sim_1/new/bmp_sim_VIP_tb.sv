@@ -46,11 +46,14 @@ integer i;
 integer j;
 wire [0:4] 	char_feature  [7:0] [7:0] ;		//特征结果
 
+`define QuestaSim
+
+`ifndef QuestaSim
 //---------------------------------------------
 initial begin
-	iBmpFileId      = $fopen("../../../../../PIC/21_Su_A65NF7/21_Su_A65NF7.bmp","rb");
+	iBmpFileId	= 	$fopen("../../../../../pic/PIC/21_Su_A65NF7/21_Su_A65NF7.bmp","rb");
 
-    //将输入BMP图片加载到数组中 21_Su_A65NF7
+//将输入BMP图片加载到数组中 21_Su_A65NF7
 	iCode = $fread(rBmpData,iBmpFileId);
  
     //根据BMP图片文件头的格式，分别计算出图片的 宽度 /高度 /像素数据偏移量 /图片字节数
@@ -66,9 +69,9 @@ initial begin
     #13000000    
 	
     //加载图像处理后，BMP图片的文件头和像素数据
-	
+
 //---------------------------------------------		
-	oBmpFileId_1 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_1.bmp","wb+");
+	oBmpFileId_1 	= 	$fopen("../../../../../pic/PIC/21_Su_A65NF7/output_file_1.bmp","wb+");
 	//输出第一张
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
@@ -84,8 +87,8 @@ initial begin
 	$fclose(oBmpFileId_1);
 
 //---------------------------------------------		
+	oBmpFileId_2 	= 	$fopen("../../../../../pic/PIC/21_Su_A65NF7/output_file_2.bmp","wb+");
 	//输出第二张
-	oBmpFileId_2 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_2.bmp","wb+");
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_2[iIndex] = rBmpData[iIndex];
@@ -105,7 +108,7 @@ initial begin
 
 //---------------------------------------------	
 	//输出第三张
-	oBmpFileId_3 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_3.bmp","wb+");
+	oBmpFileId_3 	= 	$fopen("../../../../../pic/PIC/21_Su_A65NF7/output_file_3.bmp","wb+");
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_3[iIndex] = rBmpData[iIndex];
@@ -124,7 +127,7 @@ initial begin
     #17000000 	
 //---------------------------------------------		
 	//输出第四张
-	oBmpFileId_4 = $fopen("../../../../../PIC/21_Su_A65NF7/output_file_4.bmp","wb+");
+	oBmpFileId_4 	= 	$fopen("../../../../../pic/PIC/21_Su_A65NF7/output_file_4.bmp","wb+");
 	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
 		if(iIndex < 54)
             Vip_BmpData_4[iIndex] = rBmpData[iIndex];
@@ -140,8 +143,7 @@ initial begin
 
 //---------------------------------------------	
 	//打开输出的Txt文本
-	oTxtFileId = $fopen("../../../../../PIC/21_Su_A65NF7/output_file.txt","w+");
-
+	oTxtFileId 		= $fopen("../../../../../pic/PIC/21_Su_A65NF7/output_file.txt","w+");
 	//输出特征值
 	for(i=0;i<8;i++)begin
 		for(j=0;j<8;j++) begin
@@ -155,7 +157,130 @@ initial begin
 end  
 //initial end
 //--------------------------------------------- 
+`else
+//---------------------------------------------
+initial begin
 
+    //打开输入BMP图片
+	iBmpFileId      = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\21_Su_A65NF7.bmp","rb");
+
+    //将输入BMP图片加载到数组中 21_Su_A65NF7
+	iCode = $fread(rBmpData,iBmpFileId);
+ 
+    //根据BMP图片文件头的格式，分别计算出图片的 宽度 /高度 /像素数据偏移量 /图片字节数
+	iBmpWidth       = {rBmpData[21],rBmpData[20],rBmpData[19],rBmpData[18]};
+	iBmpHight       = {rBmpData[25],rBmpData[24],rBmpData[23],rBmpData[22]};
+	iBmpSize        = {rBmpData[ 5],rBmpData[ 4],rBmpData[ 3],rBmpData[ 2]};
+	iDataStartIndex = {rBmpData[13],rBmpData[12],rBmpData[11],rBmpData[10]};
+    
+    //关闭输入BMP图片
+	$fclose(iBmpFileId);
+
+//---------------------------------------------		
+	//打开输出BMP图片
+	oBmpFileId_1 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_1.bmp","wb+");
+	oBmpFileId_2 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_2.bmp","wb+");
+	oBmpFileId_3 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_4.bmp","wb+");
+	oBmpFileId_4 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_3.bmp","wb+");
+        
+    //延迟13ms，等待第一帧VIP处理结束
+    #13000000    
+	
+    //加载图像处理后，BMP图片的文件头和像素数据
+	
+//---------------------------------------------		
+	//输出第一张
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		if(iIndex < 54)
+            Vip_BmpData_1[iIndex] = rBmpData[iIndex];
+        else
+            Vip_BmpData_1[iIndex] = vip_pixel_data_1[iIndex-54];
+	end
+    //将数组中的数据写到输出BMP图片中    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
+		rBmpWord = {Vip_BmpData_1[iIndex+3],Vip_BmpData_1[iIndex+2],Vip_BmpData_1[iIndex+1],Vip_BmpData_1[iIndex]};
+		$fwrite(oBmpFileId_1,"%u",rBmpWord);
+	end
+
+//---------------------------------------------		
+	//输出第二张
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		if(iIndex < 54)
+            Vip_BmpData_2[iIndex] = rBmpData[iIndex];
+        else
+            Vip_BmpData_2[iIndex] = vip_pixel_data_2[iIndex-54];
+	end
+    //将数组中的数据写到输出BMP图片中    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
+		rBmpWord = {Vip_BmpData_2[iIndex+3],Vip_BmpData_2[iIndex+2],Vip_BmpData_2[iIndex+1],Vip_BmpData_2[iIndex]};
+		$fwrite(oBmpFileId_2,"%u",rBmpWord);
+	end
+	
+//---------------------------------------------
+//延迟13ms，等待第二帧VIP处理结束
+    #13000000 	
+	
+//---------------------------------------------		
+	//输出第三张
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		if(iIndex < 54)
+            Vip_BmpData_3[iIndex] = rBmpData[iIndex];
+        else
+            Vip_BmpData_3[iIndex] = vip_pixel_data_3[iIndex-54];
+	end
+    //将数组中的数据写到输出BMP图片中    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
+		rBmpWord = {Vip_BmpData_3[iIndex+3],Vip_BmpData_3[iIndex+2],Vip_BmpData_3[iIndex+1],Vip_BmpData_3[iIndex]};
+		$fwrite(oBmpFileId_3,"%u",rBmpWord);
+	end
+
+//---------------------------------------------
+//延迟13ms，等待第三帧VIP处理结束
+    #17000000 	
+	
+//---------------------------------------------		
+	//输出第四张
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 1) begin
+		if(iIndex < 54)
+            Vip_BmpData_4[iIndex] = rBmpData[iIndex];
+        else
+            Vip_BmpData_4[iIndex] = vip_pixel_data[iIndex-54];
+	end
+    //将数组中的数据写到输出BMP图片中    
+	for (iIndex = 0; iIndex < iBmpSize; iIndex = iIndex + 4) begin
+		rBmpWord = {Vip_BmpData_4[iIndex+3],Vip_BmpData_4[iIndex+2],Vip_BmpData_4[iIndex+1],Vip_BmpData_4[iIndex]};
+		$fwrite(oBmpFileId_4,"%u",rBmpWord);
+	end	
+    	
+    //关闭输出BMP图片
+	$fclose(oBmpFileId_1);
+	$fclose(oBmpFileId_2);
+	$fclose(oBmpFileId_3);
+	$fclose(oBmpFileId_4);
+		
+//---------------------------------------------	
+	//打开输出的Txt文本
+	oTxtFileId = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file.txt","w+");
+
+	//输出特征值
+	for(i=0;i<8;i++)begin
+		for(j=0;j<8;j++) begin
+			$fdisplay(oTxtFileId,"%b",char_feature[i][7-j]);
+		end
+		$fdisplay(oTxtFileId,"\n");
+	end
+
+
+    //将数组中的数据写到输出Txt文本中
+	//$fwrite(oTxtFileId,"%p",rBmpData);
+	
+    //关闭Txt文本
+    $fclose(oTxtFileId);
+
+end  
+//initial end
+//--------------------------------------------- 
+`endif
 
 
 //---------------------------------------------		
@@ -857,6 +982,8 @@ lcd_display u_lcd_display(
     );
 
 
+
+
 //-------------------------------------
 
 wire 		PIC1_vip_out_frame_vsync;   
@@ -896,6 +1023,7 @@ assign PIC2_vip_out_frame_clken 	=  	post5_frame_clken ;
 assign PIC2_vip_out_img_R 			=  	{8{post5_img_Bit}};
 assign PIC2_vip_out_img_G 			=  	{8{post5_img_Bit}};
 assign PIC2_vip_out_img_B 			=  	{8{post5_img_Bit}};
+
 
 //第三张输出灰度转换之后的Cb
  assign PIC3_vip_out_frame_vsync 	=	post10_frame_vsync ; 	   
@@ -1088,5 +1216,6 @@ always@(posedge clk or negedge rst_n)begin
    end
 end
  
+
 
 endmodule 

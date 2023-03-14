@@ -21,11 +21,11 @@ module VIP_horizon_projection_char#(
 	output				post_frame_clken,	//Processed Image data output/capture enable clock
 	output				post_img_Bit, 		//Processed Image Bit flag outout(1: Value, 0:inValid)
 
-    output reg [9:0] 	char_top ,          //è¾¹æ²¿åæ ‡
+    output reg [9:0] 	char_top ,          //±ßÑØ×ø±ê
     output reg [9:0] 	char_down,
 	
-    input      [9:0] 	horizon_start,		//æŠ•å½±èµ·å§‹åˆ—
-    input      [9:0] 	horizon_end			//æŠ•å½±ç»“æŸåˆ—  
+    input      [9:0] 	horizon_start,		//Í¶Ó°ÆğÊ¼ÁĞ
+    input      [9:0] 	horizon_end			//Í¶Ó°½áÊøÁĞ  
 );
 
 reg [9:0] 	max_pixel_up  ;
@@ -96,7 +96,7 @@ assign vsync_pos_flag = per_frame_vsync    & (~per_frame_vsync_r);
 assign vsync_neg_flag = (~per_frame_vsync) & per_frame_vsync_r;
 
 //------------------------------------------
-//å¯¹è¾“å…¥çš„åƒç´ è¿›è¡Œâ€œè¡Œ/åœºâ€æ–¹å‘è®¡æ•°ï¼Œå¾—åˆ°å…¶çºµæ¨ªåæ ‡
+//¶ÔÊäÈëµÄÏñËØ½øĞĞ¡°ĞĞ/³¡¡±·½Ïò¼ÆÊı£¬µÃµ½Æä×İºá×ø±ê
 reg [9:0]  	x_cnt;
 reg [9:0]   y_cnt;
 
@@ -125,7 +125,7 @@ begin
 end
 
 //------------------------------------------
-//å¯„å­˜â€œè¡Œ/åœºâ€æ–¹å‘è®¡æ•°
+//¼Ä´æ¡°ĞĞ/³¡¡±·½Ïò¼ÆÊı
 reg [9:0]  	x_cnt_r;
 reg [9:0]   y_cnt_r;
 
@@ -143,7 +143,7 @@ begin
 end
 
 //------------------------------------------
-//æ°´å¹³è®¡æ•°åƒç´ è·³å˜
+//Ë®Æ½¼ÆÊıÏñËØÌø±ä
 
 reg [9:0] 	change_cnt;
 
@@ -162,14 +162,14 @@ always@(posedge clk or negedge rst_n) begin
 		img_bit_reg 	<= 0;
 		change_cnt 		<= 0;
 	end
-	else if(vsync_pos_flag) begin			//ä¸€å¸§å¼€å§‹åˆå§‹åŒ–
+	else if(vsync_pos_flag) begin			//Ò»Ö¡¿ªÊ¼³õÊ¼»¯
 		char_top_flag	<= 0;
 		char_top_reg 	<= 0;
 		char_down_reg	<= 0;
 		img_bit_reg 	<= 0;
 		change_cnt 		<= 0;
 	end
-	else if(post_frame_href == 1'b0) begin	//ä¸€è¡Œå¼€å§‹åˆå§‹åŒ–
+	else if(post_frame_href == 1'b0) begin	//Ò»ĞĞ¿ªÊ¼³õÊ¼»¯
 		img_bit_reg		<= 0;
 		change_cnt  	<= 0;	
 	end
@@ -180,13 +180,13 @@ always@(posedge clk or negedge rst_n) begin
 		if((img_bit_reg != per_img_Bit))
 			change_cnt <= change_cnt + 1'b1;
 
-		//ä¸‹è¾¹ç•Œ
+		//ÏÂ±ß½ç
 		if((x_cnt == IMG_HDISP -1) && (char_top_flag == 0) && (change_cnt >= EDGE_THROD -1) ) begin
 			char_top_reg 	<= y_cnt ; //+ 1
 			char_top_flag 	<= 1'b1;
 		end
 		
-		//ä¸Šè¾¹ç•Œ
+		//ÉÏ±ß½ç
 		if((x_cnt == IMG_HDISP -1) && (char_top_flag == 1) && (change_cnt >= EDGE_THROD -1) ) begin
 			char_down_reg 	<= y_cnt + 1;
 		end

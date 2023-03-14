@@ -167,12 +167,18 @@ end
 //Step 4
 wire	[10:0]	Dim;
 
-SQRT u_SQRT (
-  .aclk                         (clk),                                        
-  .s_axis_cartesian_tvalid      (1'b1), 
-  .s_axis_cartesian_tdata       (Gxy_square),   
-  .m_axis_dout_tvalid           ( ),           
-  .m_axis_dout_tdata            (Dim)              
+cordic_sqrt#(
+    .DATA_WIDTH_IN     	(10			),
+    .DATA_WIDTH_OUT    	(11			),
+    .Pipeline          	(9 			)
+)u_cordic_sqrt(	
+    .clk				(clk		),
+    .rst_n				(rst_n		),
+    .sqrt_in_0			(Gx_data	),
+    .sqrt_in_1			(Gy_data	),
+
+    .sqrt_out			(Dim		),
+	.angle_out			(			)
 );
 
 //---------------------------------------
@@ -199,15 +205,15 @@ always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n)
 		begin
-		per_frame_vsync_r <= 0;
-		per_frame_href_r <= 0;
-		per_frame_clken_r <= 0;
+			per_frame_vsync_r <= 0;
+			per_frame_href_r <= 0;
+			per_frame_clken_r <= 0;
 		end
 	else
 		begin
-		per_frame_vsync_r 	<= 	{per_frame_vsync_r[3:0], 	matrix_frame_vsync};
-		per_frame_href_r 	<= 	{per_frame_href_r[3:0], 	matrix_frame_href};
-		per_frame_clken_r 	<= 	{per_frame_clken_r[3:0], 	matrix_frame_clken};
+			per_frame_vsync_r 	<= 	{per_frame_vsync_r[3:0], 	matrix_frame_vsync};
+			per_frame_href_r 	<= 	{per_frame_href_r[3:0], 	matrix_frame_href};
+			per_frame_clken_r 	<= 	{per_frame_clken_r[3:0], 	matrix_frame_clken};
 		end
 end
 assign	post_frame_vsync 	= 	per_frame_vsync_r[4];

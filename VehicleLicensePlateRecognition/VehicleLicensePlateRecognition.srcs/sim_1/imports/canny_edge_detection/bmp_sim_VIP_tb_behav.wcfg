@@ -11,18 +11,46 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="22.928133200 ms"></ZoomStartTime>
-      <ZoomEndTime time="45.068133201 ms"></ZoomEndTime>
-      <Cursor1Time time="41.400000000 ms"></Cursor1Time>
+      <ZoomStartTime time="135,878.782 ns"></ZoomStartTime>
+      <ZoomEndTime time="137,080.244 ns"></ZoomEndTime>
+      <Cursor1Time time="136,880.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="251"></NameColumnWidth>
+      <NameColumnWidth column_width="215"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="13" />
-   <wvobject fp_name="/bmp_sim_VIP_tb/u_plate_boarder_adjust/plate_boarder_up" type="array">
-      <obj_property name="ElementShortName">plate_boarder_up[9:0]</obj_property>
-      <obj_property name="ObjectShortName">plate_boarder_up[9:0]</obj_property>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/per_frame_vsync" type="logic">
+      <obj_property name="ElementShortName">per_frame_vsync</obj_property>
+      <obj_property name="ObjectShortName">per_frame_vsync</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/per_frame_href" type="logic">
+      <obj_property name="ElementShortName">per_frame_href</obj_property>
+      <obj_property name="ObjectShortName">per_frame_href</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/per_frame_clken" type="logic">
+      <obj_property name="ElementShortName">per_frame_clken</obj_property>
+      <obj_property name="ObjectShortName">per_frame_clken</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/per_img_red" type="array">
+      <obj_property name="ElementShortName">per_img_red[7:0]</obj_property>
+      <obj_property name="ObjectShortName">per_img_red[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/per_img_green" type="array">
+      <obj_property name="ElementShortName">per_img_green[7:0]</obj_property>
+      <obj_property name="ObjectShortName">per_img_green[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/per_img_blue" type="array">
+      <obj_property name="ElementShortName">per_img_blue[7:0]</obj_property>
+      <obj_property name="ObjectShortName">per_img_blue[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/post_frame_vsync" type="logic">
       <obj_property name="ElementShortName">post_frame_vsync</obj_property>
@@ -47,68 +75,5 @@
    <wvobject fp_name="/bmp_sim_VIP_tb/u_VIP_RGB888_YCbCr444/post_img_Cr" type="array">
       <obj_property name="ElementShortName">post_img_Cr[7:0]</obj_property>
       <obj_property name="ObjectShortName">post_img_Cr[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="divider" fp_name="divider150">
-   </wvobject>
-   <wvobject fp_name="/bmp_sim_VIP_tb/u_plate_boarder_adjust/plate_boarder_down" type="array">
-      <obj_property name="ElementShortName">plate_boarder_down[9:0]</obj_property>
-      <obj_property name="ObjectShortName">plate_boarder_down[9:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/bmp_sim_VIP_tb/u_plate_boarder_adjust/plate_boarder_left" type="array">
-      <obj_property name="ElementShortName">plate_boarder_left[9:0]</obj_property>
-      <obj_property name="ObjectShortName">plate_boarder_left[9:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/bmp_sim_VIP_tb/u_plate_boarder_adjust/plate_boarder_right" type="array">
-      <obj_property name="ElementShortName">plate_boarder_right[9:0]</obj_property>
-      <obj_property name="ObjectShortName">plate_boarder_right[9:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index" type="array">
-      <obj_property name="ElementShortName">char_index[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">char_index[7:0][7:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[7]" type="array">
-         <obj_property name="ElementShortName">[7][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[7][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[6]" type="array">
-         <obj_property name="ElementShortName">[6][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[6][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[5]" type="array">
-         <obj_property name="ElementShortName">[5][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[5][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[4]" type="array">
-         <obj_property name="ElementShortName">[4][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[4][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[3]" type="array">
-         <obj_property name="ElementShortName">[3][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[3][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[2]" type="array">
-         <obj_property name="ElementShortName">[2][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[2][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[1]" type="array">
-         <obj_property name="ElementShortName">[1][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[1][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/char_index[0]" type="array">
-         <obj_property name="ElementShortName">[0][7:0]</obj_property>
-         <obj_property name="ObjectShortName">[0][7:0]</obj_property>
-         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      </wvobject>
-   </wvobject>
-   <wvobject fp_name="/bmp_sim_VIP_tb/conv_template_match/match_valid" type="logic">
-      <obj_property name="ElementShortName">match_valid</obj_property>
-      <obj_property name="ObjectShortName">match_valid</obj_property>
    </wvobject>
 </wave_config>

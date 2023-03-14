@@ -21,11 +21,11 @@ module VIP_horizon_projection#(
 	output				post_frame_clken,	//Processed Image data output/capture enable clock
 	output				post_img_Bit, 		//Processed Image Bit flag outout(1: Value, 0:inValid)
 
-    output reg [9:0] 	max_line_up ,        //è¾¹æ²¿åæ ‡
+    output reg [9:0] 	max_line_up ,        //±ßÑØ×ø±ê
     output reg [9:0] 	max_line_down,
 	
-    input      [9:0] 	horizon_start,		//æŠ•å½±èµ·å§‹åˆ—
-    input      [9:0] 	horizon_end			//æŠ•å½±ç»“æŸåˆ—  
+    input      [9:0] 	horizon_start,		//Í¶Ó°ÆğÊ¼ÁĞ
+    input      [9:0] 	horizon_end			//Í¶Ó°½áÊøÁĞ  
 );
 
 reg [9:0] 	max_pixel_up  ;
@@ -97,7 +97,7 @@ assign vsync_pos_flag = per_frame_vsync    & (~per_frame_vsync_r);
 assign vsync_neg_flag = (~per_frame_vsync) & per_frame_vsync_r;
 
 //------------------------------------------
-//å¯¹è¾“å…¥çš„åƒç´ è¿›è¡Œâ€œè¡Œ/åœºâ€æ–¹å‘è®¡æ•°ï¼Œå¾—åˆ°å…¶çºµæ¨ªåæ ‡
+//¶ÔÊäÈëµÄÏñËØ½øĞĞ¡°ĞĞ/³¡¡±·½Ïò¼ÆÊı£¬µÃµ½Æä×İºá×ø±ê
 reg [9:0]  	x_cnt;
 reg [9:0]   y_cnt;
 
@@ -126,7 +126,7 @@ begin
 end
 
 //------------------------------------------
-//å¯„å­˜â€œè¡Œ/åœºâ€æ–¹å‘è®¡æ•°
+//¼Ä´æ¡°ĞĞ/³¡¡±·½Ïò¼ÆÊı
 reg [9:0]  	x_cnt_r;
 reg [9:0]   y_cnt_r;
 
@@ -143,7 +143,7 @@ begin
 end
 
 //------------------------------------------
-//æ°´å¹³æ–¹å‘æŠ•å½±
+//Ë®Æ½·½ÏòÍ¶Ó°
 reg  		ram_wr;
 wire [9:0] 	ram_wr_data;
 wire [9:0] 	ram_rd_data;
@@ -158,22 +158,22 @@ always @ (posedge clk or negedge rst_n) begin
         ram_wr <= 1'b0;
 end
 
-//å¯¹æ‰€æœ‰åˆ—è¿›è¡Œæ°´å¹³æŠ•å½±
-//assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 				//å›¾åƒçš„ç¬¬ä¸€è¡Œï¼ŒRAMæ¸…é›¶
+//¶ÔËùÓĞÁĞ½øĞĞË®Æ½Í¶Ó°
+//assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 				//Í¼ÏñµÄµÚÒ»ĞĞ£¬RAMÇåÁã
 //                        per_img_Bit_r ? ram_rd_data + 1'b1 :
 //                            ram_rd_data;
 
-assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 				//å›¾åƒçš„ç¬¬ä¸€è¡Œï¼ŒRAMæ¸…é›¶
+assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 				//Í¼ÏñµÄµÚÒ»ĞĞ£¬RAMÇåÁã
                         ((x_cnt > horizon_start) && (x_cnt < horizon_end)) ? (ram_rd_data + per_img_Bit_r) :
                             ram_rd_data;
 
 wire [9:0] ram_wr_addr;
-//åœ¨å›¾åƒäººçš„ç¬¬ä¸€è¡Œå’Œæœ€åä¸€è¡Œï¼Œéœ€è¦éå†RAMä¸­çš„æ•°æ®
+//ÔÚÍ¼ÏñÈËµÄµÚÒ»ĞĞºÍ×îºóÒ»ĞĞ£¬ĞèÒª±éÀúRAMÖĞµÄÊı¾İ
 assign ram_wr_addr = (y_cnt == 10'd0)  ?  x_cnt : y_cnt_r;
 
 
 wire [9:0] ram_rd_addr;
-//åœ¨å›¾åƒäººçš„ç¬¬ä¸€è¡Œå’Œæœ€åä¸€è¡Œï¼Œéœ€è¦éå†RAMä¸­çš„æ•°æ®
+//ÔÚÍ¼ÏñÈËµÄµÚÒ»ĞĞºÍ×îºóÒ»ĞĞ£¬ĞèÒª±éÀúRAMÖĞµÄÊı¾İ
 assign ram_rd_addr = ((y_cnt == 10'd0) || (y_cnt == IMG_VDISP - 1'b1))  ?  x_cnt : y_cnt;
 
 // ram	u_projection_ram (
@@ -187,16 +187,33 @@ assign ram_rd_addr = ((y_cnt == 10'd0) || (y_cnt == IMG_VDISP - 1'b1))  ?  x_cnt
 // 	.q 			( ram_rd_data 	)
 // 	);
 
-ram u_projection_ram (
-  .clka		(clk 			),  // input wire clka
-  .wea		(ram_wr 		),  // input wire [0 : 0] wea
-  .addra	(ram_wr_addr 	),  // input wire [9 : 0] addra
-  .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
+// blk_mem_gen_0 u_projection_ram (
+//   .clka		(clk 			),  // input wire clka
+//   .wea		(ram_wr 		),  // input wire [0 : 0] wea
+//   .addra	(ram_wr_addr 	),  // input wire [9 : 0] addra
+//   .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
+//   .clkb		(clk 			),  // input wire clkb
+//   .addrb	(ram_rd_addr 	),  // input wire [9 : 0] addrb
+//   .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+// );
 
-  .clkb		(clk 			),  // input wire clkb
-  .addrb	(ram_rd_addr 	),  // input wire [9 : 0] addrb
-  .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+// wire [9:0] 	ram_wr_data_test;
+// wire [9:0] 	ram_rd_data_test;
+
+dual_port_ram #(
+    .RAM_WIDTH  (10            ),
+    .ADDR_LINE  (10            )
+)u_dual_port_ram(
+    .clk        (clk 			),
+    .wr_en      (ram_wr 		),
+    .wr_addr    (ram_wr_addr 	),
+    .wr_data    (ram_wr_data 	),
+
+    .rd_addr    (ram_rd_addr    ),
+    .rd_data    (ram_rd_data    )
 );
+
+
 
 
 reg [9:0] rd_data_d1;
@@ -218,9 +235,9 @@ reg [9:0] max_y1    ;
 reg [9:0] max_num2  ;
 reg [9:0] max_y2    ;
 
-reg rise_flag;	//æ ‡å¿—ç€æŠ•å½±çš„ç¬¬ä¸€ä¸ªä¸Šå‡æ²¿æ˜¯å¦å‡ºç°
+reg rise_flag;	//±êÖ¾×ÅÍ¶Ó°µÄµÚÒ»¸öÉÏÉıÑØÊÇ·ñ³öÏÖ
 
-//BMPä»¿çœŸæ—¶ä½¿ç”¨ä»¥ä¸‹ä»£ç 
+//BMP·ÂÕæÊ±Ê¹ÓÃÒÔÏÂ´úÂë
 always @ (posedge clk or negedge rst_n) begin
     if(!rst_n) begin
         max_y1   	<= 10'd0;
@@ -232,17 +249,17 @@ always @ (posedge clk or negedge rst_n) begin
     end
     else if(per_frame_clken) begin
 
-        if(y_cnt == IMG_VDISP - 1'b1) begin    //å›¾åƒçš„æœ€åä¸€è¡Œï¼Œéå†RAMä¸­çš„æ•°æ®
+        if(y_cnt == IMG_VDISP - 1'b1) begin    //Í¼ÏñµÄ×îºóÒ»ĞĞ£¬±éÀúRAMÖĞµÄÊı¾İ
 		
-			//æ­¤å¤„è¡¨ç¤ºä¸‹è¾¹ç•Œ
-			if((rise_flag == 1'b0) && (ram_rd_data > rd_data_d2 + EDGE_THROD)) begin	//ç¬¬ä¸€ä¸ªä¸Šå‡æ²¿
+			//´Ë´¦±íÊ¾ÏÂ±ß½ç
+			if((rise_flag == 1'b0) && (ram_rd_data > rd_data_d2 + EDGE_THROD)) begin	//µÚÒ»¸öÉÏÉıÑØ
 			    max_y1		<= x_cnt_r-5;
 				max_num1	<= ram_rd_data;
 				rise_flag 	<= 1'b1;
 			end	
 			
-			//æ³¨æ„ï¼Œåœ¨ä»¿çœŸBMPå›¾ç‰‡æ—¶ï¼Œç”±äºbmpæ˜¯ä»ä¸‹å¾€ä¸Šè¯»å–ï¼Œæ‰€ä»¥æ­¤å¤„è¡¨ç¤ºçš„å®é™…ä¸Šæ˜¯ä¸Šè¾¹ç•Œ
-			if(rd_data_d2 > ram_rd_data + EDGE_THROD) begin	//ä¸‹é™æ²¿ä¸æ–­è¿­ä»£ï¼Œç›´åˆ°æœ€åä¸€ä¸ªä¸‹é™æ²¿
+			//×¢Òâ£¬ÔÚ·ÂÕæBMPÍ¼Æ¬Ê±£¬ÓÉÓÚbmpÊÇ´ÓÏÂÍùÉÏ¶ÁÈ¡£¬ËùÒÔ´Ë´¦±íÊ¾µÄÊµ¼ÊÉÏÊÇÉÏ±ß½ç
+			if(rd_data_d2 > ram_rd_data + EDGE_THROD) begin	//ÏÂ½µÑØ²»¶Ïµü´ú£¬Ö±µ½×îºóÒ»¸öÏÂ½µÑØ
 			    max_y2   	<= x_cnt_r-7;
 				max_num2  	<= rd_data_d2;
 			end	
@@ -260,7 +277,7 @@ always @ (posedge clk or negedge rst_n) begin
     end
 end
 
-//æ‘„åƒå¤´æ˜¾ç¤ºæ—¶ï¼Œä½¿ç”¨ä»¥ä¸‹ä»£ç 
+//ÉãÏñÍ·ÏÔÊ¾Ê±£¬Ê¹ÓÃÒÔÏÂ´úÂë
 //always @ (posedge clk or negedge rst_n) begin
 //    if(!rst_n) begin
 //        max_y1   	<= 10'd0;
@@ -272,16 +289,16 @@ end
 //    end
 //    else if(per_frame_clken) begin
 //
-//        if(y_cnt == IMG_VDISP - 1'b1) begin    //å›¾åƒçš„æœ€åä¸€è¡Œï¼Œéå†RAMä¸­çš„æ•°æ®
+//        if(y_cnt == IMG_VDISP - 1'b1) begin    //Í¼ÏñµÄ×îºóÒ»ĞĞ£¬±éÀúRAMÖĞµÄÊı¾İ
 //		
-//			if((rise_flag == 1'b0) && (ram_rd_data > rd_data_d2 + EDGE_THROD)) begin	//ç¬¬ä¸€ä¸ªä¸Šå‡æ²¿
+//			if((rise_flag == 1'b0) && (ram_rd_data > rd_data_d2 + EDGE_THROD)) begin	//µÚÒ»¸öÉÏÉıÑØ
 //			    max_y1		<= x_cnt_r;
 //				max_num1	<= ram_rd_data;
 //				rise_flag 	<= 1'b1;
 //			end	
 //			
-//			//æ³¨æ„ï¼Œåœ¨ä»¿çœŸBMPå›¾ç‰‡æ—¶ï¼Œç”±äºbmpæ˜¯ä»ä¸‹å¾€ä¸Šè¯»å–ï¼Œæ‰€ä»¥æ­¤å¤„è¡¨ç¤ºçš„å®é™…ä¸Šæ˜¯ä¸Šè¾¹ç•Œ
-//			if(rd_data_d2 > ram_rd_data + EDGE_THROD) begin	//ä¸‹é™æ²¿ä¸æ–­è¿­ä»£ï¼Œç›´åˆ°æœ€åä¸€ä¸ªä¸‹é™æ²¿
+//			//×¢Òâ£¬ÔÚ·ÂÕæBMPÍ¼Æ¬Ê±£¬ÓÉÓÚbmpÊÇ´ÓÏÂÍùÉÏ¶ÁÈ¡£¬ËùÒÔ´Ë´¦±íÊ¾µÄÊµ¼ÊÉÏÊÇÉÏ±ß½ç
+//			if(rd_data_d2 > ram_rd_data + EDGE_THROD) begin	//ÏÂ½µÑØ²»¶Ïµü´ú£¬Ö±µ½×îºóÒ»¸öÏÂ½µÑØ
 //			    max_y2   	<= x_cnt_r-5;
 //				max_num2  	<= rd_data_d2;
 //			end	
@@ -330,12 +347,12 @@ always @ (posedge clk or negedge rst_n) begin
     end
     else if(per_frame_clken) begin
 
-        if(y_cnt == IMG_VDISP - 1'b1) begin    //å›¾åƒçš„æœ€åä¸€è¡Œï¼Œéå†RAMä¸­çš„æ•°æ®ï¼Œæ±‚æå€¼ 
+        if(y_cnt == IMG_VDISP - 1'b1) begin    //Í¼ÏñµÄ×îºóÒ»ĞĞ£¬±éÀúRAMÖĞµÄÊı¾İ£¬Çó¼«Öµ 
             if(ram_rd_data >= max_num1) begin
                 max_num1 <= ram_rd_data;
                 max_y1   <= x_cnt_r;
                 
-                if(x_cnt_r - 3 > max_y1 ) begin  //æ’é™¤ç›¸é‚»å‡ ä¸ªæå¤§å€¼
+                if(x_cnt_r - 3 > max_y1 ) begin  //ÅÅ³ıÏàÁÚ¼¸¸ö¼«´óÖµ
                     max_num2 <= max_num1;
                     max_y2   <= max_y1;
                 end

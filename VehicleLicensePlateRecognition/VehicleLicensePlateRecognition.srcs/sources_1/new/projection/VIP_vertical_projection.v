@@ -24,11 +24,11 @@ module VIP_vertical_projection
 	output				post_frame_clken,	//Processed Image data output/capture enable clock
 	output				post_img_Bit, 		//Processed Image Bit flag outout(1: Value, 0:inValid)
 
-    output reg [9:0] 	max_line_left ,		//边沿坐标
+    output reg [9:0] 	max_line_left ,		//鏉堣�勯儴閸ф劖鐖�
     output reg [9:0] 	max_line_right,
 	
-    input      [9:0] 	vertical_start,		//投影起始行
-    input      [9:0] 	vertical_end		//投影结束行	     
+    input      [9:0] 	vertical_start,		//閹舵洖濂栫挧宄帮拷瀣�锟斤拷
+    input      [9:0] 	vertical_end		//閹舵洖濂栫紒鎾存将鐞涳拷	     
 );
 
 reg [9:0] 	max_pixel_left ;
@@ -98,7 +98,7 @@ assign vsync_pos_flag = per_frame_vsync    & (~per_frame_vsync_r);
 assign vsync_neg_flag = (~per_frame_vsync) & per_frame_vsync_r;
 
 //------------------------------------------
-//对输入的像素进行“行/场”方向计数，得到其纵横坐标
+//鐎电�呯翻閸忋儳娈戦崓蹇曠�屾潻娑滐拷灞糕偓婊嗭拷锟�/閸﹁　鈧�婵囨煙閸氭垼锟解剝鏆熼敍灞界繁閸掓澘鍙剧痪鍨�铆閸ф劖鐖�
 reg [9:0]  	x_cnt;
 reg [9:0]   y_cnt;
 
@@ -127,7 +127,7 @@ begin
 end
 
 //------------------------------------------
-//寄存“行/场”方向计数
+//鐎靛嫬鐡ㄩ垾婊嗭拷锟�/閸﹁　鈧�婵囨煙閸氭垼锟解剝鏆�
 reg [9:0]  	x_cnt_r;
 reg [9:0]   y_cnt_r;
 
@@ -145,7 +145,7 @@ begin
 end
 
 //------------------------------------------
-//竖直方向投影
+//缁旀牜娲块弬鐟版倻閹舵洖濂�
 reg  		ram_wr;
 wire [9:0] 	ram_wr_data;
 wire [9:0] 	ram_rd_data;
@@ -160,14 +160,14 @@ always @ (posedge clk or negedge rst_n) begin
         ram_wr <= 1'b0;
 end
 
-//对整帧进行投影
-// assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//第一行，初始化RAM为0
+//鐎佃�勬殻鐢�褑绻樼悰灞惧�囪ぐ锟�
+// assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//缁楋拷娑撯偓鐞涘矉绱濋崚婵嗭拷瀣�瀵睷AM娑擄拷0
 //                         per_img_Bit_r ? ram_rd_data + 1'b1 :
 //                             ram_rd_data;
 
-//在指定的行数之间进行投影
+//閸︺劍瀵氱€规氨娈戠悰灞炬殶娑斿��妫挎潻娑滐拷灞惧�囪ぐ锟�
 
-assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//第一行，初始化RAM为0
+assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//缁楋拷娑撯偓鐞涘矉绱濋崚婵嗭拷瀣�瀵睷AM娑擄拷0
                         ((y_cnt > vertical_start) && (y_cnt < vertical_end)) ? (ram_rd_data + per_img_Bit_r) :  
                             ram_rd_data;
 
@@ -181,17 +181,30 @@ assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//第一行，初始化RAM�
 // 	.rdaddress 	( x_cnt 		),
 // 	.q 			( ram_rd_data 	)
 // 	);
-ram u_projection_ram (
-  .clka		(clk 			),  // input wire clka
-  .wea		(ram_wr 		),  // input wire [0 : 0] wea
-  .addra	(x_cnt_r 		),  // input wire [9 : 0] addra
-  .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
 
-  .clkb		(clk 			),  // input wire clkb
-  .addrb	(x_cnt 			),  // input wire [9 : 0] addrb
-  .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+// blk_mem_gen_0 u_projection_ram (
+//   .clka		(clk 			),  // input wire clka
+//   .wea		(ram_wr 		),  // input wire [0 : 0] wea
+//   .addra	    (x_cnt_r 		),  // input wire [9 : 0] addra
+//   .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
+//   .clkb		(clk 			),  // input wire clkb
+//   .addrb	    (x_cnt 			),  // input wire [9 : 0] addrb
+//   .doutb	    (ram_rd_data 	)  	// output wire [9 : 0] doutb
+// );
+
+
+dual_port_ram #(
+    .RAM_WIDTH  (10            ),
+    .ADDR_LINE  (10            )
+)u_dual_port_ram(
+    .clk        (clk 			),
+    .wr_en      (ram_wr 		),
+    .wr_addr    (x_cnt_r 		),
+    .wr_data    (ram_wr_data 	),
+
+    .rd_addr    (x_cnt 			),
+    .rd_data    (ram_rd_data 	)
 );
-
 
 	
 reg [9:0] rd_data_d1;
@@ -213,7 +226,7 @@ reg [9:0] max_x1    ;
 reg [9:0] max_num2  ;
 reg [9:0] max_x2    ;
 
-reg rise_flag;	//标志着投影的第一个上升沿是否出现
+reg rise_flag;	//閺嶅洤绻旈惈鈧�閹舵洖濂栭惃鍕�锟斤拷娑撯偓娑擄拷娑撳﹤宕屽▽鎸庢Ц閸氾箑鍤�閻滐拷
 
 always @ (posedge clk or negedge rst_n) begin
     if(!rst_n) begin
@@ -228,13 +241,13 @@ always @ (posedge clk or negedge rst_n) begin
 
         if(y_cnt == IMG_VDISP - 1'b1) begin 
 
-			if((rise_flag == 1'b0) && (ram_rd_data > rd_data_d2 + EDGE_THROD)) begin	//第一个上升沿
+			if((rise_flag == 1'b0) && (ram_rd_data > rd_data_d2 + EDGE_THROD)) begin	//缁楋拷娑撯偓娑擄拷娑撳﹤宕屽▽锟�
 			    max_x1		<= x_cnt_r;
 				max_num1	<= ram_rd_data;
 				rise_flag 	<= 1'b1;
 			end	
 			
-			if(rd_data_d2 > ram_rd_data + EDGE_THROD) begin	//下降沿不断迭代，直到最后一个下降沿
+			if(rd_data_d2 > ram_rd_data + EDGE_THROD) begin	//娑撳��妾峰▽澶哥瑝閺傦拷鏉╋拷娴狅綇绱濋惄鏉戝煂閺堚偓閸氬簼绔存稉锟芥稉瀣�妾峰▽锟�
 			    max_x2   	<= x_cnt_r-5;
 				max_num2  	<= rd_data_d2;
 			end		
@@ -286,7 +299,7 @@ always @ (posedge clk or negedge rst_n) begin
                 max_num1 <= ram_rd_data;
                 max_x1   <= x_cnt_r;
                 
-                if(x_cnt_r - 3 > max_x1 ) begin  //排除相邻几个极大值
+                if(x_cnt_r - 3 > max_x1 ) begin  //閹烘帡娅庨惄鎼佸仸閸戠姳閲滈弸浣搞亣閸婏拷
                     max_num2 <= max_num1;
                     max_x2   <= max_x1;
                 end

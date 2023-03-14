@@ -23,8 +23,8 @@ module VIP_vertical_projection_char
 
 	output reg [20:0] 	char_boarder[7:0],  //{valid_flag[0],left_boarder[9:0],right_boarder[9:0]}
 	
-    input      [9:0] 	vertical_start,		//投影起始行
-    input      [9:0] 	vertical_end,		//投影结束行	
+    input      [9:0] 	vertical_start,		//投影起�?��??
+    input      [9:0] 	vertical_end,		//投影结束�?	
 
     input       [9:0] 	plate_boarder_left 	,
     input       [9:0] 	plate_boarder_right	 	
@@ -97,7 +97,7 @@ assign vsync_pos_flag = per_frame_vsync    & (~per_frame_vsync_r);
 assign vsync_neg_flag = (~per_frame_vsync) & per_frame_vsync_r;
 
 //------------------------------------------
-//对输入的像素进行“行/场”方向计数，得到其纵横坐标
+//对输入的像素进�?�“�??/场”方向�?�数，得到其纵横坐标
 reg [9:0]  	x_cnt;
 reg [9:0]   y_cnt;
 
@@ -126,7 +126,7 @@ begin
 end
 
 //------------------------------------------
-//寄存“行/场”方向计数
+//寄存“�??/场”方向�?�数
 reg [9:0]  	x_cnt_r;
 reg [9:0]   y_cnt_r;
 
@@ -159,27 +159,51 @@ always @ (posedge clk or negedge rst_n) begin
         ram_wr <= 1'b0;
 end
 
-//对整帧进行投影
-// assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//第一行，初始化RAM为0
+//对整帧进行投�?
+// assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//�?一行，初�?�化RAM�?0
 //                         per_img_Bit_r ? ram_rd_data + 1'b1 :
 //                             ram_rd_data;
 
-//在指定的行数之间进行投影
+//在指定的行数之间进�?�投�?
 
-assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//第一行，初始化RAM为0
+assign ram_wr_data = (y_cnt == 10'd0) ? 10'd0 : 					//�?一行，初�?�化RAM�?0
                         ((y_cnt > vertical_start) && (y_cnt < vertical_end)) ? (ram_rd_data + per_img_Bit_r) :  
                             ram_rd_data;
 
-ram u_projection_ram (
-  .clka		(clk 			),  // input wire clka
-  .wea		(ram_wr 		),  // input wire [0 : 0] wea
-  .addra	(x_cnt_r 		),  // input wire [9 : 0] addra
-  .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
 
-  .clkb		(clk 			),  // input wire clkb
-  .addrb	(x_cnt 			),  // input wire [9 : 0] addrb
-  .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+dual_port_ram #(
+    .RAM_WIDTH  (10            ),
+    .ADDR_LINE  (10            )
+)u_dual_port_ram(
+    .clk        (clk 			),
+    .wr_en      (ram_wr 		),
+    .wr_addr    (x_cnt_r 		),
+    .wr_data    (ram_wr_data 	),
+
+    .rd_addr    (x_cnt 			),
+    .rd_data    (ram_rd_data 	)
 );
+
+// blk_mem_gen_0 u_projection_ram (
+//   .clka		(clk 			),  // input wire clka
+//   .wea		(ram_wr 		),  // input wire [0 : 0] wea
+//   .addra	(x_cnt_r 		),  // input wire [9 : 0] addra
+//   .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
+//   .clkb		(clk 			),  // input wire clkb
+//   .addrb	(x_cnt 			),  // input wire [9 : 0] addrb
+//   .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+// );
+
+// ram u_projection_ram (
+//   .clka		(clk 			),  // input wire clka
+//   .wea		(ram_wr 		),  // input wire [0 : 0] wea
+//   .addra	(x_cnt_r 		),  // input wire [9 : 0] addra
+//   .dina		(ram_wr_data 	),  // input wire [9 : 0] dina
+
+//   .clkb		(clk 			),  // input wire clkb
+//   .addrb	(x_cnt 			),  // input wire [9 : 0] addrb
+//   .doutb	(ram_rd_data 	)  	// output wire [9 : 0] doutb
+// );
 	
 reg [9:0] rd_data_d1;
 reg [9:0] rd_data_d2;
@@ -207,13 +231,13 @@ reg [20:0] char_boarder_reg[7:0];
 
 integer i;
 
-//根据RAM中统计的投影结果，判断字符边界
+//根据RAM�?统�?�的投影结果，判�?字�?�边�?
 always @ (posedge clk or negedge rst_n) begin
     if(!rst_n) begin
 		char_cnt <= 3'd0;
 		
 		for(i=0;i<8; i++) begin
-			char_boarder_reg[i] <= 31'd0;	//初始化输出列表	
+			char_boarder_reg[i] <= 31'd0;	//初�?�化输出列表	
 		end
 		
     end
@@ -221,28 +245,28 @@ always @ (posedge clk or negedge rst_n) begin
 
         if(y_cnt == IMG_VDISP - 1'b1) begin    
 		
-			if((rd_data_d1 == 10'd0) && (ram_rd_data > 10'd0)) begin //上升沿
+			if((rd_data_d1 == 10'd0) && (ram_rd_data > 10'd0)) begin //上升�?
 				
-				if(char_cnt == 3'd1) begin										//对待汉字进行特殊判断
-					if(x_cnt_r - char_boarder_reg[0][19:10] < plate_width[9:3])	//第二个上升沿小于汉字宽度（大致等于车牌尺寸的1/8），则认定为左右结构的汉字
-						char_cnt <= 3'd0;   									//此时忽略第二个上升沿，同时将计数器置0，这样可以在第二个下降沿到达时，重新更新汉字的右边界
+				if(char_cnt == 3'd1) begin										//对待汉字进�?�特殊判�?
+					if(x_cnt_r - char_boarder_reg[0][19:10] < plate_width[9:3])	//�?二个上升沿小于汉字�?�度（大致等于车牌尺寸的1/8），则�?�定为左右结构的汉字
+						char_cnt <= 3'd0;   									//此时忽略�?二个上升沿，同时将�?�数器置0，这样可以在�?二个下降沿到达时，重新更新汉字的右边�?
 					else
-						char_boarder_reg[char_cnt][19:10] <= x_cnt_r - 1;		//左边界
+						char_boarder_reg[char_cnt][19:10] <= x_cnt_r - 1;		//左边�?
 				end 
 
 				else begin
-					char_boarder_reg[char_cnt][19:10] <= x_cnt_r - 1;			//左边界
+					char_boarder_reg[char_cnt][19:10] <= x_cnt_r - 1;			//左边�?
 				end
 			end	
 			
-			if((rd_data_d1 > 10'd0) && (ram_rd_data == 10'd0)) begin //下降沿
+			if((rd_data_d1 > 10'd0) && (ram_rd_data == 10'd0)) begin //下降�?
 
-				char_boarder_reg[char_cnt][9:0] <= x_cnt_r;						//右边界
-				char_boarder_reg[char_cnt][20]  <= 1'b1;						//有效标志位
+				char_boarder_reg[char_cnt][9:0] <= x_cnt_r;						//右边�?
+				char_boarder_reg[char_cnt][20]  <= 1'b1;						//有效标志�?
 			
-				if(char_cnt != 3'd2) begin										//对字符的宽度进行判断，如果小于一定的数值，则认为是车牌上的污点
+				if(char_cnt != 3'd2) begin										//对字符的宽度进�?�判�?，�?�果小于一定的数值，则�?�为�?车牌上的污点
 					if(x_cnt_r - char_boarder_reg[char_cnt][19:10] < 3)
-						char_cnt <= char_cnt;									//重新等待新的上升沿/下降沿
+						char_cnt <= char_cnt;									//重新等待新的上升�?/下降�?
 					else 
 						char_cnt <= char_cnt + 1'b1;
 				end
@@ -253,7 +277,7 @@ always @ (posedge clk or negedge rst_n) begin
 	end
 	else if(vsync_pos_flag) begin
 		for(i=0;i<8; i++) begin
-			char_boarder_reg[i] <= 31'd0;	//初始化输出列表	
+			char_boarder_reg[i] <= 31'd0;	//初�?�化输出列表	
 		end
 		
 		char_cnt <= 3'd0;
@@ -266,12 +290,12 @@ integer j;
 always @ (posedge clk or negedge rst_n) begin
     if(!rst_n) begin
 		for(j=0;j<8; j++) begin
-			char_boarder[j] <= 31'd0;	//初始化输出列表	
+			char_boarder[j] <= 31'd0;	//初�?�化输出列表	
 		end
     end
     else if(vsync_neg_flag) begin
 		for(j=0;j<8; j++) begin
-			char_boarder[j] <= char_boarder_reg[j];	//初始化输出列表	
+			char_boarder[j] <= char_boarder_reg[j];	//初�?�化输出列表	
 		end
     end   
 end

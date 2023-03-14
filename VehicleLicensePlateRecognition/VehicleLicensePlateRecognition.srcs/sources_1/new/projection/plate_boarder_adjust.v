@@ -1,4 +1,4 @@
-//è°ƒæ•´è½¦ç‰Œçš„è¾¹æ¡†ï¼Œè°ƒæ•´åä»…åŒ…å«å­—ç¬¦
+//µ÷Õû³µÅÆµÄ±ß¿ò£¬µ÷Õûºó½ö°üº¬×Ö·û
 
 module plate_boarder_adjust (
 	//global clock
@@ -7,17 +7,17 @@ module plate_boarder_adjust (
 
 	input				per_frame_vsync,	
 
-    input      [9:0] 	max_line_up 		,	//è¾“å…¥çš„è½¦ç‰Œå€™é€‰åŒºåŸŸ
+    input      [9:0] 	max_line_up 		,	//ÊäÈëµÄ³µÅÆºòÑ¡ÇøÓò
     input      [9:0] 	max_line_down		,
     input      [9:0] 	max_line_left 		,     
     input      [9:0] 	max_line_right		,
 	
-    output reg [9:0] 	plate_boarder_up 	,  	//è°ƒæ•´åçš„è¾¹æ¡†
+    output reg [9:0] 	plate_boarder_up 	,  	//µ÷ÕûºóµÄ±ß¿ò
     output reg [9:0] 	plate_boarder_down	, 
     output reg [9:0] 	plate_boarder_left 	,
     output reg [9:0] 	plate_boarder_right	,
 	
-	output reg 			plate_exist_flag		//æ ¹æ®è¾“å…¥çš„è¾¹æ¡†å®½é«˜æ¯”ï¼Œåˆ¤æ–­æ˜¯å¦å­˜åœ¨è½¦ç‰Œ	
+	output reg 			plate_exist_flag		//¸ù¾İÊäÈëµÄ±ß¿ò¿í¸ß±È£¬ÅĞ¶ÏÊÇ·ñ´æÔÚ³µÅÆ	
 );
 
 reg per_frame_vsync_r;
@@ -30,12 +30,12 @@ begin
 		per_frame_vsync_r 	<= 	per_frame_vsync	;
 end
 
-//åœºåŒæ­¥ä¿¡å·ä¸Šå‡æ²¿ï¼Œè¾“å…¥çš„è¾¹ç•Œæœ‰æ•ˆ
+//³¡Í¬²½ĞÅºÅÉÏÉıÑØ£¬ÊäÈëµÄ±ß½çÓĞĞ§
 
 wire vsync_pos_flag;
 assign vsync_pos_flag = per_frame_vsync & (~per_frame_vsync_r);
 
-//è®¡ç®—è¾¹ç•Œçš„å®½é«˜
+//¼ÆËã±ß½çµÄ¿í¸ß
 wire [9:0] max_line_height;       
 wire [9:0] max_line_width ;
 	
@@ -43,15 +43,15 @@ assign max_line_height	= max_line_down  - max_line_up;
 assign max_line_width   = max_line_right - max_line_left;
 
 
-//è½¦ç‰Œçš„å®½é«˜æ¯”å¤§è‡´ä¸ºâ€œ3æ¯”1â€ï¼Œè¯¯å·®ä¸èƒ½è¶…å‡ºä¸€å®šçš„èŒƒå›´ï¼Œè¯¥èŒƒå›´è®¾ç½®ä¸ºå®½åº¦çš„1/8
-reg [11:0] height_mult_3;	//é«˜åº¦*3
-reg [ 9:0] width_div_8;		//å®½åº¦/8
-reg [11:0] difference;		//è¯¯å·®
+//³µÅÆµÄ¿í¸ß±È´óÖÂÎª¡°3±È1¡±£¬Îó²î²»ÄÜ³¬³öÒ»¶¨µÄ·¶Î§£¬¸Ã·¶Î§ÉèÖÃÎª¿í¶ÈµÄ1/8
+reg [11:0] height_mult_3;	//¸ß¶È*3
+reg [ 9:0] width_div_8;		//¿í¶È/8
+reg [11:0] difference;		//Îó²î
 
 
-//ä¸‹é¢è®¡ç®—å®½é«˜æ¯”çš„è¯¯å·®ï¼Œè¿™æ®µé€»è¾‘ä¸ç”¨å…³å¿ƒæ—¶åºï¼Œå› ä¸ºè®¡ç®—ç»“æœåœ¨VSYNCä¸Šå‡æ²¿æ‰ä¼šç”¨åˆ°ï¼Œæ­¤æ—¶æ•°æ®ç¨³å®šä¸å˜
+//ÏÂÃæ¼ÆËã¿í¸ß±ÈµÄÎó²î£¬Õâ¶ÎÂß¼­²»ÓÃ¹ØĞÄÊ±Ğò£¬ÒòÎª¼ÆËã½á¹ûÔÚVSYNCÉÏÉıÑØ²Å»áÓÃµ½£¬´ËÊ±Êı¾İÎÈ¶¨²»±ä
 
-//é«˜åº¦*3
+//¸ß¶È*3
 always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n)
@@ -60,7 +60,7 @@ begin
 		height_mult_3  <= max_line_height + max_line_height + max_line_height;
 end
 
-//è®¡ç®—å®½é«˜æ¯”çš„è¯¯å·®
+//¼ÆËã¿í¸ß±ÈµÄÎó²î
 always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n)
@@ -74,7 +74,7 @@ begin
 	end
 end
 
-//è®¡ç®—è¯¯å·®ä¸Šé™ï¼Œå®½åº¦/8
+//¼ÆËãÎó²îÉÏÏŞ£¬¿í¶È/8
 always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n)
@@ -83,36 +83,36 @@ begin
 		width_div_8	<= max_line_width[9:3];
 end
 
-//åˆ¤æ–­è½¦ç‰Œæ˜¯å¦å­˜åœ¨
+//ÅĞ¶Ï³µÅÆÊÇ·ñ´æÔÚ
 always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n)
 		plate_exist_flag 	<= 0;
 	else if(vsync_pos_flag) begin
 	
-		if(max_line_down <= max_line_up)				//è½¦ç‰Œçš„ä¸‹è¾¹æ¡†ä¸èƒ½å°äºä¸Šè¾¹æ¡†
+		if(max_line_down <= max_line_up)				//³µÅÆµÄÏÂ±ß¿ò²»ÄÜĞ¡ÓÚÉÏ±ß¿ò
 			plate_exist_flag <= 0;
 		else
-		if(max_line_right <= max_line_left)				//è½¦ç‰Œçš„å³è¾¹æ¡†ä¸èƒ½å°äºå·¦è¾¹æ¡†
+		if(max_line_right <= max_line_left)				//³µÅÆµÄÓÒ±ß¿ò²»ÄÜĞ¡ÓÚ×ó±ß¿ò
 			plate_exist_flag <= 0;
 		else
-		if(max_line_height < 10'd16)					//é«˜åº¦ä¸èƒ½å°äº16
+		if(max_line_height < 10'd16)					//¸ß¶È²»ÄÜĞ¡ÓÚ16
 			plate_exist_flag <= 0;
 		else
-		if(max_line_width < 10'd48)						//å®½åº¦ä¸èƒ½å°äº48
+		if(max_line_width < 10'd48)						//¿í¶È²»ÄÜĞ¡ÓÚ48
 			plate_exist_flag <= 0;
 		else
-		if(difference > width_div_8)					//è½¦ç‰Œå®½é«˜æ¯”çš„è¯¯å·®è¶…è¿‡ä¸Šé™
+		if(difference > width_div_8)					//³µÅÆ¿í¸ß±ÈµÄÎó²î³¬¹ıÉÏÏŞ
 			plate_exist_flag <= 0;
 		else
 			plate_exist_flag <= 1;
 	end
 end
 
-//æŒ‰ç…§ä¸€å®šæ¯”ä¾‹ä¿®æ­£è½¦ç‰Œå­—ç¬¦çš„è¾¹ç•Œ
+//°´ÕÕÒ»¶¨±ÈÀıĞŞÕı³µÅÆ×Ö·ûµÄ±ß½ç
 
-reg [9:0] h_shift;	//æ°´å¹³æ–¹å‘è¾¹ç•Œåç§»é‡ 
-reg [9:0] v_shift;	//ç«–ç›´æ–¹å‘è¾¹ç•Œåç§»é‡ 
+reg [9:0] h_shift;	//Ë®Æ½·½Ïò±ß½çÆ«ÒÆÁ¿ 
+reg [9:0] v_shift;	//ÊúÖ±·½Ïò±ß½çÆ«ÒÆÁ¿ 
 
 always@(posedge clk or negedge rst_n)
 begin
@@ -130,7 +130,7 @@ begin
 		v_shift	<= height_mult_3/30;
 end
 
-//è¾“å‡ºä¿®æ­£åçš„è¾¹ç•Œ
+//Êä³öĞŞÕıºóµÄ±ß½ç
 always@(posedge clk or negedge rst_n)
 begin
 	if(!rst_n) begin
