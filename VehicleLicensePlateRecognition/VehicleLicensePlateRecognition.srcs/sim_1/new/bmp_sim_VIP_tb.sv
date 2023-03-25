@@ -162,7 +162,8 @@ end
 initial begin
 
     //打开输入BMP图片
-	iBmpFileId      = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\21_Su_A65NF7.bmp","rb");
+	//iBmpFileId      = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\21_Su_A65NF7.bmp","rb");
+	iBmpFileId      = $fopen("..\\pic\\PIC\\21_Su_A65NF7\\21_Su_A65NF7.bmp","rb");
 
     //将输入BMP图片加载到数组中 21_Su_A65NF7
 	iCode = $fread(rBmpData,iBmpFileId);
@@ -178,10 +179,10 @@ initial begin
 
 //---------------------------------------------		
 	//打开输出BMP图片
-	oBmpFileId_1 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_1.bmp","wb+");
-	oBmpFileId_2 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_2.bmp","wb+");
-	oBmpFileId_3 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_4.bmp","wb+");
-	oBmpFileId_4 = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file_3.bmp","wb+");
+	oBmpFileId_1 = $fopen("..\\pic\\PIC\\21_Su_A65NF7\\output_file_1.bmp","wb+");
+	oBmpFileId_2 = $fopen("..\\pic\\PIC\\21_Su_A65NF7\\output_file_2.bmp","wb+");
+	oBmpFileId_3 = $fopen("..\\pic\\PIC\\21_Su_A65NF7\\output_file_4.bmp","wb+");
+	oBmpFileId_4 = $fopen("..\\pic\\PIC\\21_Su_A65NF7\\output_file_3.bmp","wb+");
         
     //延迟13ms，等待第一帧VIP处理结束
     #13000000    
@@ -257,10 +258,10 @@ initial begin
 	$fclose(oBmpFileId_2);
 	$fclose(oBmpFileId_3);
 	$fclose(oBmpFileId_4);
-		
+
 //---------------------------------------------	
 	//打开输出的Txt文本
-	oTxtFileId = $fopen("E:\\github\\Vehicle-License-Plate-Recognition\\pic\\PIC\\21_Su_A65NF7\\output_file.txt","w+");
+	oTxtFileId = $fopen("..\\pic\\PIC\\21_Su_A65NF7\\output_file.txt","w+");
 
 	//输出特征值
 	for(i=0;i<8;i++)begin
